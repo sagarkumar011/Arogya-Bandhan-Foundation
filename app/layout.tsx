@@ -4,7 +4,10 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import SiteLayoutWrapper from "@/components/SiteLayoutWrapper";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://arogya-bandhan-foundation-2.onrender.com";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Arogya Bandhan Foundation | Healthy People | Stronger Communities",
   description:
     "Arogya Bandhan Foundation is a social impact organization dedicated to accessible healthcare, preventive medical camps, nutrition, child welfare, and community empowerment across India.",
@@ -19,11 +22,14 @@ export const metadata: Metadata = {
     "Healthy People Stronger Communities",
   ],
   authors: [{ name: "Arogya Bandhan Foundation" }],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Arogya Bandhan Foundation | Healthy People | Stronger Communities",
     description:
       "Empowering underserved communities through accessible healthcare, medical camps, disease prevention, and women's health.",
-    url: "https://www.arogyabandhan.org",
+    url: siteUrl,
     siteName: "Arogya Bandhan Foundation",
     images: [
       {
@@ -35,6 +41,13 @@ export const metadata: Metadata = {
     ],
     locale: "en_IN",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Arogya Bandhan Foundation | Healthy People | Stronger Communities",
+    description:
+      "Empowering underserved communities through accessible healthcare, medical camps, disease prevention, and women's health.",
+    images: ["/images/hero_healthcare.jpg"],
   },
   icons: {
     icon: "/logo.png",

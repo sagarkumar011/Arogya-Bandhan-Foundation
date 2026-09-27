@@ -1,7 +1,14 @@
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://arogya-bandhan-foundation-2.onrender.com";
+
+export const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "https://arogya-bandhan-foundation-2.onrender.com";
+
 export const BRAND = {
   name: "Arogya Bandhan Foundation",
   shortName: "ABF",
   tagline: "Healthy People | Stronger Communities",
+  website: SITE_URL,
   mission:
     "Arogya Bandhan Foundation works for the welfare of communities through healthcare camps, education, food support, social welfare, women and child development, mass marriage initiatives and community service.",
   phone: "+91 98765 43210",

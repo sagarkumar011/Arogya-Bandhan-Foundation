@@ -30,6 +30,8 @@ export async function sendTransactionalEmail(payload: EmailPayload): Promise<{ s
 }
 
 export function generateDonationSuccessEmail(donorName: string, amount: number, donationNumber: string, campaignName: string) {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://arogya-bandhan-foundation-2.onrender.com";
+
   return `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #DCE5EC; border-radius: 8px;">
       <div style="text-align: center; margin-bottom: 24px;">
@@ -43,8 +45,13 @@ export function generateDonationSuccessEmail(donorName: string, amount: number, 
         <p style="margin: 0 0 8px;"><strong>Date:</strong> ${new Date().toLocaleDateString("en-IN")}</p>
         <p style="margin: 0;"><strong>Status:</strong> Successful & Verified</p>
       </div>
+      <div style="text-align: center; margin: 24px 0;">
+        <a href="${siteUrl}/user/donations" style="background-color: #087F5B; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; display: inline-block;">
+          View Receipt & Dashboard
+        </a>
+      </div>
       <p>Your contribution directly supports healthcare camps, essential medicine distribution, and life-changing community programs.</p>
-      <p>Warm regards,<br/><strong>Team Arogya Bandhan Foundation</strong></p>
+      <p>Warm regards,<br/><strong>Team Arogya Bandhan Foundation</strong><br/><a href="${siteUrl}" style="color: #0877C9;">${siteUrl}</a></p>
     </div>
   `;
 }

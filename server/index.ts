@@ -16,7 +16,12 @@ const PORT = Number(process.env.PORT) || 5000;
 // Dynamic CORS configuration
 const allowedOrigins = process.env.CORS_ORIGIN
   ? process.env.CORS_ORIGIN.split(",").map((o) => o.trim())
-  : ["http://localhost:3000", "http://127.0.0.1:3000"];
+  : [
+      "https://arogya-bandhan-foundation-2.onrender.com",
+      "https://www.arogyabandhan.org",
+      "http://localhost:3000",
+      "http://127.0.0.1:3000",
+    ];
 
 app.use(
   cors({

@@ -1,6 +1,7 @@
 # Arogya Bandhan Foundation (आरोग्य बंधन फाउंडेशन)
 > **Tagline:** *"Healthy People | Stronger Communities"*  
-> **Broad Social Welfare Foundation & Trust**
+> **Broad Social Welfare Foundation & Trust**  
+> **Production Live URL:** [https://arogya-bandhan-foundation-2.onrender.com](https://arogya-bandhan-foundation-2.onrender.com)
 
 ---
 
@@ -258,20 +259,23 @@ When deploying to **Render**, **Railway**, **Supabase**, **Neon**, or **AWS RDS*
    - `RAZORPAY_KEY_SECRET`: Razorpay secret key
 7. Click **Deploy**. Vercel will build and launch your full-stack platform globally.
 
-### B. Deploy Standalone Backend to Render (Optional Microservice)
-If you wish to host the standalone Express API independently:
+### B. Deploy Full-Stack Platform to Render (Live Production)
+**Production URL:** [https://arogya-bandhan-foundation-2.onrender.com](https://arogya-bandhan-foundation-2.onrender.com)
+
 1. Go to [Render Dashboard](https://dashboard.render.com).
-2. Click **New +** and select **Web Service**.
-3. Connect your GitHub repository.
-4. Runtime: **Node**.
-5. Build Command: `npm install && npx prisma generate`
-6. Start Command: `npm run start:server`
-7. Set Environment Variables:
-   - `PORT`: `5000` (or leave default, Render sets `PORT` automatically)
-   - `DATABASE_URL`: Your PostgreSQL connection string
-   - `CORS_ORIGIN`: Your frontend URL (e.g., `https://arogyabandhan.vercel.app,http://localhost:3000`)
-   - `JWT_SECRET`: Matching JWT secret
-8. Click **Create Web Service**. Render binds to `0.0.0.0` automatically.
+2. Connect your GitHub repository: `sagarkumar011/Arogya-Bandhan-Foundation`.
+3. Use the included `render.yaml` Blueprint or create a **Web Service**:
+   - Runtime: **Node**
+   - Build Command: `npx prisma generate && npx prisma db push && npm run build`
+   - Start Command: `npm start`
+4. Configure Environment Variables:
+   - `DATABASE_URL`: Your Render PostgreSQL Internal Database URL
+   - `NEXT_PUBLIC_SITE_URL`: `https://arogya-bandhan-foundation-2.onrender.com`
+   - `NEXT_PUBLIC_APP_URL`: `https://arogya-bandhan-foundation-2.onrender.com`
+   - `NEXT_PUBLIC_API_URL`: `https://arogya-bandhan-foundation-2.onrender.com`
+   - `JWT_SECRET`: Random 32+ character string
+   - `CORS_ORIGIN`: `https://arogya-bandhan-foundation-2.onrender.com,http://localhost:3000`
+5. Render deploys your full-stack Next.js 14 platform with automatic HTTPS.
 
 ---
 
