@@ -1,0 +1,26 @@
+# ===============================================================
+# AROGYA BANDHAN FOUNDATION - RENDER BLUEPRINT
+# Tagline: "Healthy People | Stronger Communities"
+# ===============================================================
+
+services:
+  - type: web
+    name: arogya-bandhan-foundation
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npx prisma generate && npx prisma db push && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false # Set in Render Dashboard with Render PostgreSQL Internal Database URL
+      - key: JWT_SECRET
+        generateValue: true
+      - key: NEXT_PUBLIC_APP_URL
+        sync: false
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
