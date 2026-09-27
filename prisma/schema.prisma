@@ -1,0 +1,327 @@
+// ===============================================================
+// AROGYA BANDHAN FOUNDATION
+// Comprehensive Production Prisma Schema
+// Tagline: "Healthy People | Stronger Communities"
+// ===============================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                    String                 @id @default(uuid())
+  email                 String                 @unique
+  passwordHash          String
+  name                  String
+  phone                 String?
+  city                  String?
+  address               String?
+  role                  String                 @default("USER") // USER, VOLUNTEER, ADMIN, SUPER_ADMIN
+  status                String                 @default("ACTIVE") // ACTIVE, INACTIVE, SUSPENDED
+  emailVerified         Boolean                @default(false)
+  profileImage          String?
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+
+  donations             Donation[]
+  volunteerApplications VolunteerApplication[]
+  eventRegistrations    EventRegistration[]
+  notifications         Notification[]
+  activityLogs          AdminActivityLog[]
+}
+
+model Campaign {
+  id                 String     @id @default(uuid())
+  title              String
+  hindiTitle         String?
+  slug               String     @unique
+  description        String
+  story              String
+  category           String     // Healthcare, Child Health, Women's Welfare, Rural Support, Emergency
+  imageUrl           String
+  goalAmount         Float
+  raisedAmount       Float      @default(0)
+  donorsCount        Int        @default(0)
+  beneficiariesCount Int        @default(0)
+  startDate          DateTime?
+  endDate            DateTime?
+  status             String     @default("ACTIVE") // DRAFT, ACTIVE, PAUSED, COMPLETED, ARCHIVED
+  isFeatured         Boolean    @default(false)
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+
+  donations          Donation[]
+}
+
+model Program {
+  id              String   @id @default(uuid())
+  title           String
+  hindiTitle      String?
+  slug            String   @unique
+  description     String
+  detailedContent String
+  icon            String   // Lucide icon name: Stethoscope, HeartHandshake, ShieldCheck, Sparkles, BookOpen, Users, etc.
+  imageUrl        String
+  targetGroup     String
+  location        String   @default("Pan-India / Rural & Underserved Communities")
+  status          String   @default("ACTIVE")
+  displayOrder    Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Donation {
+  id                 String              @id @default(uuid())
+  donationNumber     String              @unique // ABF-DON-2026-0001
+  userId             String?
+  donorName          String
+  donorEmail         String
+  donorPhone         String?
+  donorPan           String?
+  donorAddress       String?
+  campaignId         String?
+  amount             Float
+  currency           String              @default("INR")
+  frequency          String              @default("ONE_TIME") // ONE_TIME, MONTHLY
+  status             String              @default("SUCCESS") // PENDING, PROCESSING, SUCCESS, FAILED, REFUNDED
+  paymentMethod      String              @default("RAZORPAY")
+  razorpayOrderId    String?
+  razorpayPaymentId  String?
+  razorpaySignature  String?
+  receiptNumber      String?
+  isAnonymous        Boolean             @default(false)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+
+  user               User?               @relation(fields: [userId], references: [id], onDelete: SetNull)
+  campaign           Campaign?           @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+  transaction        PaymentTransaction?
+  receipt            DonationReceipt?
+}
+
+model PaymentTransaction {
+  id          String   @id @default(uuid())
+  donationId  String   @unique
+  gateway     String   @default("RAZORPAY")
+  orderId     String?
+  paymentId   String?
+  signature   String?
+  status      String   @default("SUCCESS")
+  amount      Float
+  rawResponse String?
+  createdAt   DateTime @default(now())
+
+  donation    Donation @relation(fields: [donationId], references: [id], onDelete: Cascade)
+}
+
+model DonationReceipt {
+  id            String   @id @default(uuid())
+  receiptNumber String   @unique // ABF-REC-2026-0001
+  donationId    String   @unique
+  donorName     String
+  donorEmail    String
+  amount        Float
+  date          DateTime @default(now())
+  campaignName  String
+  downloadCount Int      @default(0)
+  createdAt     DateTime @default(now())
+
+  donation      Donation @relation(fields: [donationId], references: [id], onDelete: Cascade)
+}
+
+model VolunteerApplication {
+  id              String   @id @default(uuid())
+  userId          String?
+  fullName        String
+  email           String
+  phone           String
+  city            String
+  occupation      String
+  skills          String
+  areasOfInterest String   // Healthcare, Education, Community Work, Events, Fundraising, Digital / Social Media, Administration
+  availability    String   // Weekends, Weekdays, Full-time, Flexible
+  message         String?
+  status          String   @default("PENDING") // PENDING, UNDER_REVIEW, APPROVED, REJECTED
+  reviewedBy      String?
+  reviewNotes     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user            User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
+
+model Event {
+  id                String              @id @default(uuid())
+  title             String
+  slug              String              @unique
+  description       String
+  detailedStory     String?
+  category          String              // Health Camp, Awareness Drive, Blood Donation, Workshop
+  imageUrl          String
+  eventDate         DateTime
+  startTime         String
+  endTime           String
+  location          String
+  venueAddress      String
+  registrationLimit Int                 @default(100)
+  registeredCount   Int                 @default(0)
+  status            String              @default("UPCOMING") // UPCOMING, OPEN, CLOSED, COMPLETED, CANCELLED
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+
+  registrations     EventRegistration[]
+}
+
+model EventRegistration {
+  id           String   @id @default(uuid())
+  eventId      String
+  userId       String?
+  fullName     String
+  email        String
+  phone        String
+  ticketNumber String   @unique // ABF-TKT-2026-0001
+  status       String   @default("CONFIRMED") // CONFIRMED, ATTENDED, CANCELLED
+  createdAt    DateTime @default(now())
+
+  event        Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user         User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
+
+model GalleryAlbum {
+  id          String         @id @default(uuid())
+  title       String
+  description String?
+  category    String         @default("Healthcare")
+  createdAt   DateTime       @default(now())
+
+  images      GalleryImage[]
+}
+
+model GalleryImage {
+  id           String        @id @default(uuid())
+  albumId      String?
+  title        String
+  caption      String?
+  category     String        // Healthcare, Education, Community, Women, Children, Events, Volunteers
+  imageUrl     String
+  displayOrder Int           @default(0)
+  isFeatured   Boolean       @default(false)
+  createdAt    DateTime      @default(now())
+
+  album        GalleryAlbum? @relation(fields: [albumId], references: [id], onDelete: SetNull)
+}
+
+model BlogPost {
+  id             String    @id @default(uuid())
+  title          String
+  hindiTitle     String?
+  slug           String    @unique
+  excerpt        String
+  content        String
+  category       String    // Healthcare, Education, Awareness, Community, Events, Foundation Updates, Success Stories
+  authorName     String    @default("Arogya Bandhan Editorial")
+  authorRole     String    @default("Healthcare & Impact Team")
+  featuredImage  String
+  tags           String?
+  isPublished    Boolean   @default(true)
+  publishedAt    DateTime  @default(now())
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model SuccessStory {
+  id              String   @id @default(uuid())
+  title           String
+  slug            String   @unique
+  category        String
+  location        String
+  challenge       String
+  supportProvided String
+  outcome         String
+  personName      String?
+  imageUrl        String
+  quote           String?
+  isPublished     Boolean  @default(true)
+  createdAt       DateTime @default(now())
+}
+
+model TransparencyDocument {
+  id          String   @id @default(uuid())
+  title       String
+  category    String   // Registration, PAN, 12A, 80G, CSR, NGO Darpan, Annual Reports, Audit Reports, Financial Statements
+  year        String
+  documentUrl String
+  fileSize    String?
+  isPublic    Boolean  @default(true)
+  statusNote  String?  // e.g. "Official Documentation" or "Information will be updated soon"
+  createdAt   DateTime @default(now())
+}
+
+model ContactMessage {
+  id         String   @id @default(uuid())
+  fullName   String
+  email      String
+  phone      String?
+  subject    String
+  message    String
+  status     String   @default("NEW") // NEW, IN_PROGRESS, RESOLVED, ARCHIVED
+  adminNotes String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model FAQ {
+  id           String   @id @default(uuid())
+  question     String
+  hindiQuestion String?
+  answer       String
+  hindiAnswer  String?
+  category     String   // Donation, Programs, Volunteering, Events, Transparency, General
+  displayOrder Int      @default(0)
+  isPublished  Boolean  @default(true)
+  createdAt    DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  title     String
+  message   String
+  type      String   @default("INFO") // INFO, SUCCESS, WARNING, DONATION, EVENT, VOLUNTEER
+  isRead    Boolean  @default(false)
+  linkUrl   String?
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AdminActivityLog {
+  id         String   @id @default(uuid())
+  adminId    String?
+  adminEmail String
+  action     String
+  entity     String
+  entityId   String?
+  details    String?
+  ipAddress  String?
+  createdAt  DateTime @default(now())
+
+  admin      User?    @relation(fields: [adminId], references: [id], onDelete: SetNull)
+}
+
+model Setting {
+  id          String   @id @default(uuid())
+  key         String   @unique
+  value       String
+  description String?
+  isPublic    Boolean  @default(true)
+  updatedAt   DateTime @default(now())
+}

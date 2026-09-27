@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-green: #087F5B;
+  --secondary-blue: #0877C9;
+  --accent-orange: #F58220;
+  --light-green: #EAF7F2;
+  --light-blue: #EAF4FB;
+  --soft-orange: #FFF2E8;
+  --dark: #0B2F2A;
+  --text-main: #17324D;
+  --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-outfit: 'Outfit', 'Inter', system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font-inter);
+  color: var(--text-main);
+  background-color: #FFFFFF;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-outfit);
+  letter-spacing: -0.02em;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-dark {
+  background: rgba(11, 47, 42, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Button & Badge enhancements */
+.btn-primary {
+  background-color: #087F5B;
+  color: #FFFFFF;
+  transition: all 0.2s ease-in-out;
+}
+.btn-primary:hover {
+  background-color: #066b4c;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(8, 127, 91, 0.25);
+}
+
+.btn-accent {
+  background-color: #F58220;
+  color: #FFFFFF;
+  transition: all 0.2s ease-in-out;
+}
+.btn-accent:hover {
+  background-color: #e07212;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(245, 130, 32, 0.3);
+}
+
+.btn-secondary {
+  background-color: #0877C9;
+  color: #FFFFFF;
+  transition: all 0.2s ease-in-out;
+}
+.btn-secondary:hover {
+  background-color: #0663a8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(8, 119, 201, 0.25);
+}
