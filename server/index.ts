@@ -17,11 +17,12 @@ const PORT = Number(process.env.PORT) || 5000;
 const allowedOrigins = process.env.CORS_ORIGIN
   ? process.env.CORS_ORIGIN.split(",").map((o) => o.trim())
   : [
-      "https://arogya-bandhan-foundation-2.onrender.com",
+      process.env.NEXT_PUBLIC_SITE_URL || "",
+      process.env.RENDER_EXTERNAL_URL || "",
       "https://www.arogyabandhan.org",
       "http://localhost:3000",
       "http://127.0.0.1:3000",
-    ];
+    ].filter(Boolean);
 
 app.use(
   cors({

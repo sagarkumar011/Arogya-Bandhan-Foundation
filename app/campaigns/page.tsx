@@ -7,13 +7,18 @@ export const metadata = {
   description: "Support active healthcare campaigns by Arogya Bandhan Foundation. Every contribution is verified, tracked, and utilized directly on the ground.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function CampaignsPage() {
-  const campaigns = await prisma.campaign.findMany({
-    where: { status: "ACTIVE" },
-    orderBy: { createdAt: "desc" },
-  });
+  let campaigns: any[] = [];
+  try {
+    campaigns = await prisma.campaign.findMany({
+      where: { status: "ACTIVE" },
+      orderBy: { createdAt: "desc" },
+    });
+  } catch (error) {
+    console.error("CampaignsPage database query fallback:", error);
+  }
 
   return (
     <div className="space-y-0">

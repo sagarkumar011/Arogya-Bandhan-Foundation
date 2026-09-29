@@ -2,19 +2,28 @@ import React from "react";
 import prisma from "@/lib/prisma";
 import ProgramCard from "@/components/ProgramCard";
 
+import { PROGRAM_LIST } from "@/lib/constants";
+
 export const metadata = {
   title: "Our Work & Social Initiatives | Arogya Bandhan Foundation",
   description:
     "Explore the foundational social welfare programs of Arogya Bandhan Foundation: Health Camps, Food Distribution, Mass Marriage, Child Welfare, Education, Women Empowerment, and Rural Development.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function ProgramsPage() {
-  const programs = await prisma.program.findMany({
-    where: { status: "ACTIVE" },
-    orderBy: { displayOrder: "asc" },
-  });
+  let programs: any[] = [];
+  try {
+    programs = await prisma.program.findMany({
+      where: { status: "ACTIVE" },
+      orderBy: { displayOrder: "asc" },
+    });
+  } catch (error) {
+    console.error("ProgramsPage database query fallback:", error);
+  }
+
+  const displayPrograms = programs.length > 0 ? programs : PROGRAM_LIST;
 
   return (
     <div className="space-y-0">

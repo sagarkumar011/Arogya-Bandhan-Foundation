@@ -7,12 +7,17 @@ export const metadata = {
   description: "Join upcoming free health screening camps, eye checkup drives, and blood donation sessions organized by Arogya Bandhan Foundation.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function EventsPage() {
-  const events = await prisma.event.findMany({
-    orderBy: { eventDate: "asc" },
-  });
+  let events: any[] = [];
+  try {
+    events = await prisma.event.findMany({
+      orderBy: { eventDate: "asc" },
+    });
+  } catch (error) {
+    console.error("EventsPage database query fallback:", error);
+  }
 
   return (
     <div className="space-y-0">

@@ -9,13 +9,18 @@ export const metadata = {
   description: "Read articles and insights on rural healthcare, maternal wellness, child nutrition, and grassroots empowerment by Arogya Bandhan Foundation.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function BlogPage() {
-  const posts = await prisma.blogPost.findMany({
-    where: { isPublished: true },
-    orderBy: { publishedAt: "desc" },
-  });
+  let posts: any[] = [];
+  try {
+    posts = await prisma.blogPost.findMany({
+      where: { isPublished: true },
+      orderBy: { publishedAt: "desc" },
+    });
+  } catch (error) {
+    console.error("BlogPage database query fallback:", error);
+  }
 
   return (
     <div className="space-y-0">

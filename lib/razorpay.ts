@@ -17,15 +17,14 @@ export interface RazorpayOrderResponse {
 }
 
 export async function createRazorpayOrder(params: CreateOrderParams): Promise<RazorpayOrderResponse> {
-  const keyId = process.env.RAZORPAY_KEY_ID || "rzp_test_arogya12345";
-  const keySecret = process.env.RAZORPAY_KEY_SECRET || "rzp_secret_arogya98765";
+  const keyId = process.env.RAZORPAY_KEY_ID || "";
+  const keySecret = process.env.RAZORPAY_KEY_SECRET || "";
 
   const amountInPaise = Math.round(params.amount * 100);
 
   // If live credentials are valid, we can call the Razorpay API.
-  // Otherwise, we provide an enterprise-grade sandbox order generator
-  // that simulates the exact Razorpay order contract so end-to-end testing works immediately.
-  const isMockKey = keyId.startsWith("rzp_test_arogya") || !process.env.RAZORPAY_KEY_ID;
+  // Otherwise, provide a sandbox order generator so testing works without real credentials.
+  const isMockKey = !keyId || keyId.startsWith("rzp_test_arogya") || !keySecret;
 
   if (isMockKey) {
     const mockOrderId = `order_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
@@ -35,7 +34,7 @@ export async function createRazorpayOrder(params: CreateOrderParams): Promise<Ra
       currency: params.currency || "INR",
       receipt: params.receipt,
       status: "created",
-      keyId,
+      keyId: keyId || "rzp_test_mock",
     };
   }
 
@@ -71,16 +70,18 @@ export async function createRazorpayOrder(params: CreateOrderParams): Promise<Ra
       keyId,
     };
   } catch (err: any) {
-    // Fallback to secure mock order if network is unavailable
-    const mockOrderId = `order_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-    return {
-      id: mockOrderId,
-      amount: amountInPaise,
-      currency: params.currency || "INR",
-      receipt: params.receipt,
-      status: "created",
-      keyId,
-    };
+    if (process.env.NODE_ENV !== "production") {
+      const mockOrderId = `order_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+      return {
+        id: mockOrderId,
+        amount: amountInPaise,
+        currency: params.currency || "INR",
+        receipt: params.receipt,
+        status: "created",
+        keyId: keyId || "rzp_test_mock",
+      };
+    }
+    throw err;
   }
 }
 
@@ -89,11 +90,20 @@ export function verifyRazorpaySignature(
   paymentId: string,
   signature: string
 ): boolean {
-  const keySecret = process.env.RAZORPAY_KEY_SECRET || "rzp_secret_arogya98765";
+  const keySecret = process.env.RAZORPAY_KEY_SECRET;
 
-  // In simulated sandbox test mode:
-  if (signature.startsWith("mock_sig_") || signature === "simulated_success_sig") {
+  // In test mode without production secrets:
+  const isMockAllowed =
+    process.env.NODE_ENV !== "production" ||
+    !keySecret ||
+    process.env.RAZORPAY_KEY_ID?.startsWith("rzp_test_arogya");
+
+  if (isMockAllowed && (signature.startsWith("mock_sig_") || signature === "simulated_success_sig")) {
     return true;
+  }
+
+  if (!keySecret) {
+    return false;
   }
 
   // Official HMAC SHA256 verification

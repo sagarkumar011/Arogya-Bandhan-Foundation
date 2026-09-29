@@ -7,13 +7,18 @@ export const metadata = {
   description: "Review Arogya Bandhan Foundation institutional registrations, financial statements, annual impact reports, and statutory compliance status.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function TransparencyPage() {
-  const documents = await prisma.transparencyDocument.findMany({
-    where: { isPublic: true },
-    orderBy: { createdAt: "desc" },
-  });
+  let documents: any[] = [];
+  try {
+    documents = await prisma.transparencyDocument.findMany({
+      where: { isPublic: true },
+      orderBy: { createdAt: "desc" },
+    });
+  } catch (error) {
+    console.error("TransparencyPage database query fallback:", error);
+  }
 
   return (
     <div className="space-y-0">

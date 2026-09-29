@@ -7,12 +7,17 @@ export const metadata = {
   description: "Browse authentic photographs of our medical camps, health awareness drives, rural clinics, and community initiatives.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function GalleryPage() {
-  const images = await prisma.galleryImage.findMany({
-    orderBy: { displayOrder: "asc" },
-  });
+  let images: any[] = [];
+  try {
+    images = await prisma.galleryImage.findMany({
+      orderBy: { displayOrder: "asc" },
+    });
+  } catch (error) {
+    console.error("GalleryPage database query fallback:", error);
+  }
 
   return (
     <div className="space-y-0">

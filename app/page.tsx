@@ -29,12 +29,19 @@ import {
 } from "lucide-react";
 import { PROGRAM_LIST } from "@/lib/constants";
 
-export const revalidate = 60; // Refresh every 60s
+export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  // Fetch real data from database
-  const [campaigns, programs, events, stories, latestBlogs, galleryImages, settings] =
-    await Promise.all([
+  let campaigns: any[] = [];
+  let programs: any[] = [];
+  let events: any[] = [];
+  let stories: any[] = [];
+  let latestBlogs: any[] = [];
+  let galleryImages: any[] = [];
+  let settings: any[] = [];
+
+  try {
+    const results = await Promise.all([
       prisma.campaign.findMany({
         where: { status: "ACTIVE" },
         orderBy: { createdAt: "desc" },
@@ -64,6 +71,11 @@ export default async function HomePage() {
       }),
       prisma.setting.findMany(),
     ]);
+
+    [campaigns, programs, events, stories, latestBlogs, galleryImages, settings] = results;
+  } catch (error) {
+    console.error("HomePage database query fallback:", error);
+  }
 
   const settingsMap: Record<string, string> = {};
   settings.forEach((s) => {

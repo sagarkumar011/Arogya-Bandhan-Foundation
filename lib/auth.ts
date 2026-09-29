@@ -4,7 +4,17 @@ import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 import prisma from "./prisma";
 
-const JWT_SECRET = process.env.JWT_SECRET || "arogya_bandhan_default_secret_key_change_in_prod";
+function getJwtSecret(): string {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    if (process.env.NODE_ENV === "production") {
+      console.warn("⚠️ WARNING: JWT_SECRET is not set in environment variables! Using fallback secret.");
+    }
+    return "arogya_bandhan_jwt_fallback_key_2026_xyz";
+  }
+  return secret;
+}
+
 const TOKEN_NAME = "abf_auth_token";
 
 export interface TokenPayload {
@@ -24,12 +34,12 @@ export async function comparePassword(password: string, hash: string): Promise<b
 }
 
 export function signToken(payload: TokenPayload): string {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: "7d" });
+  return jwt.sign(payload, getJwtSecret(), { expiresIn: "7d" });
 }
 
 export function verifyToken(token: string): TokenPayload | null {
   try {
-    return jwt.verify(token, JWT_SECRET) as TokenPayload;
+    return jwt.verify(token, getJwtSecret()) as TokenPayload;
   } catch (err) {
     return null;
   }

@@ -1,7 +1,10 @@
 # ===============================================================
-# AROGYA BANDHAN FOUNDATION - RENDER BLUEPRINT
+# AROGYA BANDHAN FOUNDATION - RENDER BLUEPRINT SPECIFICATION
 # Tagline: "Healthy People | Stronger Communities"
+# Production Single Next.js Web Service + Managed PostgreSQL
 # ===============================================================
+
+version: "1"
 
 services:
   - type: web
@@ -9,24 +12,53 @@ services:
     runtime: node
     plan: free
     region: oregon
-    buildCommand: npx prisma generate && npx prisma db push && npm run build
+    buildCommand: npm install && npx prisma generate && npm run build
+    preDeployCommand: npx prisma migrate deploy
     startCommand: npm start
+    healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
         value: production
+      - key: HOSTNAME
+        value: 0.0.0.0
       - key: DATABASE_URL
-        sync: false # Set in Render Dashboard with Render PostgreSQL Internal Database URL
+        fromDatabase:
+          name: arogya-postgres-db
+          property: connectionString
       - key: JWT_SECRET
         generateValue: true
       - key: NEXT_PUBLIC_SITE_URL
-        value: https://arogya-bandhan-foundation-2.onrender.com
+        sync: false
       - key: NEXT_PUBLIC_APP_URL
-        value: https://arogya-bandhan-foundation-2.onrender.com
+        sync: false
       - key: NEXT_PUBLIC_API_URL
-        value: https://arogya-bandhan-foundation-2.onrender.com
+        sync: false
       - key: CORS_ORIGIN
-        value: https://arogya-bandhan-foundation-2.onrender.com,http://localhost:3000
+        sync: false
       - key: RAZORPAY_KEY_ID
         sync: false
       - key: RAZORPAY_KEY_SECRET
         sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: EMAIL_HOST
+        sync: false
+      - key: EMAIL_PORT
+        sync: false
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASSWORD
+        sync: false
+      - key: EMAIL_FROM
+        sync: false
+
+databases:
+  - name: arogya-postgres-db
+    plan: free
+    region: oregon
+    databaseName: arogya_bandhan
+    user: arogya_admin

@@ -5,30 +5,44 @@ import { notFound } from "next/navigation";
 import prisma from "@/lib/prisma";
 import { Heart, MapPin, Users, CheckCircle2, ArrowRight } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const program = await prisma.program.findFirst({
-    where: { OR: [{ slug: params.slug }, { id: params.slug }] },
-  });
-  if (!program) return { title: "Program Not Found" };
-  return {
-    title: `${program.title} | Arogya Bandhan Foundation`,
-    description: program.description,
-  };
+  try {
+    const program = await prisma.program.findFirst({
+      where: { OR: [{ slug: params.slug }, { id: params.slug }] },
+    });
+    if (!program) return { title: "Program Not Found" };
+    return {
+      title: `${program.title} | Arogya Bandhan Foundation`,
+      description: program.description,
+    };
+  } catch {
+    return { title: "Program Focus | Arogya Bandhan Foundation" };
+  }
 }
 
 export default async function ProgramDetailPage({ params }: { params: { slug: string } }) {
-  const program = await prisma.program.findFirst({
-    where: { OR: [{ slug: params.slug }, { id: params.slug }] },
-  });
+  let program = null;
+  let otherPrograms: any[] = [];
+
+  try {
+    program = await prisma.program.findFirst({
+      where: { OR: [{ slug: params.slug }, { id: params.slug }] },
+    });
+
+    if (program) {
+      otherPrograms = await prisma.program.findMany({
+        where: { id: { not: program.id } },
+        take: 3,
+        orderBy: { displayOrder: "asc" },
+      });
+    }
+  } catch (error) {
+    console.error("ProgramDetailPage database error:", error);
+  }
 
   if (!program) notFound();
-
-  // Related programs
-  const otherPrograms = await prisma.program.findMany({
-    where: { id: { not: program.id } },
-    take: 3,
-    orderBy: { displayOrder: "asc" },
-  });
 
   return (
     <div className="space-y-0">

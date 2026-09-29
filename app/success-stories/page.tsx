@@ -7,13 +7,18 @@ export const metadata = {
   description: "Read real stories of hope, health recovery, and community resilience made possible by Arogya Bandhan Foundation supporters.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function SuccessStoriesPage() {
-  const stories = await prisma.successStory.findMany({
-    where: { isPublished: true },
-    orderBy: { createdAt: "desc" },
-  });
+  let stories: any[] = [];
+  try {
+    stories = await prisma.successStory.findMany({
+      where: { isPublished: true },
+      orderBy: { createdAt: "desc" },
+    });
+  } catch (error) {
+    console.error("SuccessStoriesPage database query fallback:", error);
+  }
 
   return (
     <div className="space-y-0">

@@ -5,32 +5,47 @@ import { notFound } from "next/navigation";
 import prisma from "@/lib/prisma";
 import { Calendar, User, ArrowLeft, Share2, Tag, ArrowRight } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const post = await prisma.blogPost.findFirst({
-    where: { OR: [{ slug: params.slug }, { id: params.slug }], isPublished: true },
-  });
-  if (!post) return { title: "Article Not Found" };
-  return {
-    title: `${post.seoTitle || post.title} | Arogya Bandhan Foundation`,
-    description: post.seoDescription || post.excerpt,
-  };
+  try {
+    const post = await prisma.blogPost.findFirst({
+      where: { OR: [{ slug: params.slug }, { id: params.slug }], isPublished: true },
+    });
+    if (!post) return { title: "Article Not Found" };
+    return {
+      title: `${post.seoTitle || post.title} | Arogya Bandhan Foundation`,
+      description: post.seoDescription || post.excerpt,
+    };
+  } catch {
+    return { title: "Article | Arogya Bandhan Foundation" };
+  }
 }
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = await prisma.blogPost.findFirst({
-    where: { OR: [{ slug: params.slug }, { id: params.slug }], isPublished: true },
-  });
+  let post = null;
+  let related: any[] = [];
+
+  try {
+    post = await prisma.blogPost.findFirst({
+      where: { OR: [{ slug: params.slug }, { id: params.slug }], isPublished: true },
+    });
+
+    if (post) {
+      related = await prisma.blogPost.findMany({
+        where: {
+          category: post.category,
+          id: { not: post.id },
+          isPublished: true,
+        },
+        take: 3,
+      });
+    }
+  } catch (error) {
+    console.error("BlogPostPage database error:", error);
+  }
 
   if (!post) notFound();
-
-  const related = await prisma.blogPost.findMany({
-    where: {
-      category: post.category,
-      id: { not: post.id },
-      isPublished: true,
-    },
-    take: 3,
-  });
 
   return (
     <div className="space-y-0 bg-slate-50 min-h-screen py-12">

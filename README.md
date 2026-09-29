@@ -1,7 +1,7 @@
 # Arogya Bandhan Foundation (आरोग्य बंधन फाउंडेशन)
 > **Tagline:** *"Healthy People | Stronger Communities"*  
 > **Broad Social Welfare Foundation & Trust**  
-> **Production Live URL:** [https://arogya-bandhan-foundation-2.onrender.com](https://arogya-bandhan-foundation-2.onrender.com)
+> **Production Ready Platform (Next.js 14 + PostgreSQL)**  
 
 ---
 
@@ -259,23 +259,26 @@ When deploying to **Render**, **Railway**, **Supabase**, **Neon**, or **AWS RDS*
    - `RAZORPAY_KEY_SECRET`: Razorpay secret key
 7. Click **Deploy**. Vercel will build and launch your full-stack platform globally.
 
-### B. Deploy Full-Stack Platform to Render (Live Production)
-**Production URL:** [https://arogya-bandhan-foundation-2.onrender.com](https://arogya-bandhan-foundation-2.onrender.com)
+### B. Deploy Full-Stack Platform to Render (Production Next.js + PostgreSQL)
 
 1. Go to [Render Dashboard](https://dashboard.render.com).
 2. Connect your GitHub repository: `sagarkumar011/Arogya-Bandhan-Foundation`.
 3. Use the included `render.yaml` Blueprint or create a **Web Service**:
-   - Runtime: **Node**
-   - Build Command: `npx prisma generate && npx prisma db push && npm run build`
+   - Environment: **Node**
+   - Build Command: `npm install && npx prisma generate && npm run build`
+   - Pre-Deploy Command: `npx prisma migrate deploy`
    - Start Command: `npm start`
-4. Configure Environment Variables:
-   - `DATABASE_URL`: Your Render PostgreSQL Internal Database URL
-   - `NEXT_PUBLIC_SITE_URL`: `https://arogya-bandhan-foundation-2.onrender.com`
-   - `NEXT_PUBLIC_APP_URL`: `https://arogya-bandhan-foundation-2.onrender.com`
-   - `NEXT_PUBLIC_API_URL`: `https://arogya-bandhan-foundation-2.onrender.com`
+   - Health Check Path: `/api/health`
+4. Add a **Render PostgreSQL Database** (Free Tier):
+   - Set the database internal connection string to `DATABASE_URL` in the Web Service.
+5. Configure Environment Variables in the Web Service:
+   - `DATABASE_URL`: `postgresql://<user>:<password>@<host>:5432/<db_name>`
    - `JWT_SECRET`: Random 32+ character string
-   - `CORS_ORIGIN`: `https://arogya-bandhan-foundation-2.onrender.com,http://localhost:3000`
-5. Render deploys your full-stack Next.js 14 platform with automatic HTTPS.
+   - `NEXT_PUBLIC_SITE_URL`: `https://your-service-name.onrender.com`
+   - `NEXT_PUBLIC_APP_URL`: `https://your-service-name.onrender.com`
+   - `NEXT_PUBLIC_API_URL`: `https://your-service-name.onrender.com`
+   - `CORS_ORIGIN`: `https://your-service-name.onrender.com`
+6. Render deploys your full-stack Next.js 14 platform with automatic HTTPS.
 
 ---
 
