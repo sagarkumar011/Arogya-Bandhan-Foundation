@@ -4,7 +4,7 @@ import { z } from "zod";
 
 const createOrderSchema = z.object({
   amount: z.number().min(10, "Minimum donation is ₹10"),
-  campaignId: z.string().optional(),
+  campaignId: z.string().optional().nullable(),
   campaignName: z.string().optional(),
   donorName: z.string().min(2, "Name is required"),
   donorEmail: z.string().email("Valid email is required"),
