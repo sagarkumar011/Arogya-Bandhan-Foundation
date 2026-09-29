@@ -1,14 +1,26 @@
 // ===============================================================
 // AROGYA BANDHAN FOUNDATION - CENTRALIZED API CLIENT
-// Routes requests to Render backend or local server dynamically
+// Routes requests to Render backend with automatic failover fallback
 // ===============================================================
 
 export function getApiBaseUrl(): string {
   const envUrl = process.env.NEXT_PUBLIC_API_URL;
-  if (envUrl && envUrl.trim() !== "") {
-    return envUrl.replace(/\/+$/, "");
+  if (!envUrl || envUrl.trim() === "") return "";
+  
+  const clean = envUrl.trim().replace(/\/+$/, "");
+  
+  // Ignore unconfigured placeholder strings
+  if (
+    clean.includes("YOUR-") ||
+    clean.includes("your-") ||
+    clean.includes("placeholder") ||
+    clean === "https://" ||
+    clean === "http://"
+  ) {
+    return "";
   }
-  return "";
+  
+  return clean;
 }
 
 export function buildApiUrl(path: string): string {
@@ -18,7 +30,8 @@ export function buildApiUrl(path: string): string {
 }
 
 export async function apiFetch(path: string, init: RequestInit = {}): Promise<Response> {
-  const url = buildApiUrl(path);
+  const cleanPath = path.startsWith("/") ? path : `/${path}`;
+  const baseUrl = getApiBaseUrl();
   const token = typeof window !== "undefined" ? localStorage.getItem("abf_auth_token") : null;
 
   const headers = new Headers(init.headers || {});
@@ -37,5 +50,20 @@ export async function apiFetch(path: string, init: RequestInit = {}): Promise<Re
     credentials: init.credentials || "include",
   };
 
-  return fetch(url, options);
+  // 1. If an external backend URL is configured, try it first
+  if (baseUrl) {
+    const targetUrl = `${baseUrl}${cleanPath}`;
+    try {
+      const res = await fetch(targetUrl, options);
+      return res;
+    } catch (networkErr: any) {
+      console.warn(
+        `External backend at ${baseUrl} unreachable (${networkErr.message}). Automatically failing over to local route: ${cleanPath}`
+      );
+      // Fall through to same-origin relative fetch
+    }
+  }
+
+  // 2. Same-origin relative fetch (Vercel Serverless Function or local Next.js dev server)
+  return fetch(cleanPath, options);
 }

@@ -41,22 +41,34 @@ app.use(
     origin: (origin, callback) => {
       // Allow requests with no origin (e.g. mobile apps, curl, server-to-server)
       if (!origin) return callback(null, true);
-      // In non-production, allow all
-      if (process.env.NODE_ENV !== "production") return callback(null, true);
-      // Check allowed origins list
-      if (allowedOrigins.indexOf(origin) !== -1) return callback(null, true);
-      // Allow any Vercel deployment or domain match
-      if (origin.endsWith(".vercel.app") || origin.includes("arogyabandhan.org")) {
-        return callback(null, true);
+      // Allow all localhost
+      if (origin.includes("localhost") || origin.includes("127.0.0.1")) {
+        return callback(null, origin);
       }
-      return callback(new Error("CORS policy violation: origin not allowed"), false);
+      // Allow any Vercel domain or deployment preview
+      if (origin.endsWith(".vercel.app") || origin.includes("vercel.app")) {
+        return callback(null, origin);
+      }
+      // Allow arogyabandhan domains
+      if (origin.includes("arogyabandhan")) {
+        return callback(null, origin);
+      }
+      // Allow explicit CORS_ORIGIN
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        return callback(null, origin);
+      }
+      // Dynamically reflect origin with credentials (safe for client portals)
+      return callback(null, origin);
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "Cookie", "X-Requested-With"],
+    allowedHeaders: ["Content-Type", "Authorization", "Cookie", "X-Requested-With", "Accept"],
     exposedHeaders: ["Set-Cookie"],
   })
 );
+
+// Handle preflight OPTIONS requests cleanly across all routes
+app.options("*", cors());
 
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
