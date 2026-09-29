@@ -86,7 +86,17 @@ export function verifyRazorpaySignature(
 ): boolean {
   const keySecret = process.env.RAZORPAY_KEY_SECRET;
 
+  console.log("RAZORPAY VERIFY DEBUG:", {
+    orderId,
+    paymentId,
+    signatureLength: signature?.length,
+    signaturePrefix: signature?.slice(0, 8),
+    secretConfigured: !!keySecret,
+    secretLength: keySecret?.length,
+  });
+
   if (!keySecret) {
+    console.error("RAZORPAY_KEY_SECRET is missing");
     return false;
   }
 
@@ -96,8 +106,15 @@ export function verifyRazorpaySignature(
       .update(`${orderId}|${paymentId}`)
       .digest("hex");
 
+    console.log("RAZORPAY SIGNATURE DEBUG:", {
+      receivedLength: signature?.length,
+      generatedLength: generatedSignature.length,
+      signaturesMatch: generatedSignature === signature,
+    });
+
     return generatedSignature === signature;
-  } catch {
+  } catch (error) {
+    console.error("RAZORPAY SIGNATURE ERROR:", error);
     return false;
   }
 }
