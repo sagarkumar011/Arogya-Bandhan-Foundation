@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
+import { apiFetch } from "@/lib/apiClient";
 import { User, Lock, Mail, Phone, MapPin, Loader2 } from "lucide-react";
 
 export default function UserRegisterPage() {
@@ -25,16 +26,15 @@ export default function UserRegisterPage() {
     setError(null);
 
     try {
-      const res = await fetch("/api/auth/register", {
+      const res = await apiFetch("/api/auth/register", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, phone, city, password }),
       });
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Registration failed");
 
-      login(data.user);
+      login(data.user, data.token);
       router.push("/user/dashboard");
     } catch (err: any) {
       setError(err.message);

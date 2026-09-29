@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
     });
 
     const response = NextResponse.json(
-      { success: true, message: "Registration successful", user },
+      { success: true, message: "Registration successful", user, token },
       { status: 201 }
     );
 

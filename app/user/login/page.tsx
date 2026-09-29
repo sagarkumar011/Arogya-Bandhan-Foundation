@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
+import { apiFetch } from "@/lib/apiClient";
 import { Lock, Mail, ArrowRight, Loader2, ShieldCheck } from "lucide-react";
 
 export default function UserLoginPage() {
@@ -22,16 +23,15 @@ export default function UserLoginPage() {
     setError(null);
 
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await apiFetch("/api/auth/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Login failed");
 
-      login(data.user);
+      login(data.user, data.token);
 
       if (data.user.role === "ADMIN" || data.user.role === "SUPER_ADMIN") {
         router.push("/admin/dashboard");

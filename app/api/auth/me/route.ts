@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSessionUser } from "@/lib/auth";
+import { getSessionUser, DEMO_ADMIN, DEMO_USER } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 
 export async function GET(req: NextRequest) {
@@ -7,6 +7,21 @@ export async function GET(req: NextRequest) {
     const session = await getSessionUser(req);
     if (!session) {
       return NextResponse.json({ authenticated: false, user: null }, { status: 200 });
+    }
+
+    // Check if session belongs to controlled demo users
+    if (session.email === DEMO_ADMIN.email || session.userId === DEMO_ADMIN.id) {
+      return NextResponse.json({
+        authenticated: true,
+        user: DEMO_ADMIN,
+      });
+    }
+
+    if (session.email === DEMO_USER.email || session.userId === DEMO_USER.id) {
+      return NextResponse.json({
+        authenticated: true,
+        user: DEMO_USER,
+      });
     }
 
     const user = await prisma.user.findUnique({

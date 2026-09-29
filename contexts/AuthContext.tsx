@@ -3,6 +3,8 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
+import { apiFetch } from "@/lib/apiClient";
+
 export interface UserSession {
   id: string;
   userId?: string;
@@ -17,7 +19,7 @@ export interface UserSession {
 interface AuthContextType {
   user: UserSession | null;
   loading: boolean;
-  login: (userData: UserSession) => void;
+  login: (userData: UserSession, token?: string) => void;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
   isAdmin: boolean;
@@ -39,12 +41,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const refreshUser = async () => {
     try {
-      const res = await fetch("/api/auth/me");
-      const data = await res.json();
-      if (data.authenticated && data.user) {
-        setUser(data.user);
-      } else {
-        setUser(null);
+      const res = await apiFetch("/api/auth/me");
+      if (res.ok) {
+        const data = await res.json();
+        if (data.authenticated && data.user) {
+          setUser(data.user);
+          return;
+        }
+      }
+      setUser(null);
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("abf_auth_token");
       }
     } catch {
       setUser(null);
@@ -57,14 +64,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     refreshUser();
   }, []);
 
-  const login = (userData: UserSession) => {
+  const login = (userData: UserSession, token?: string) => {
     setUser(userData);
+    if (token && typeof window !== "undefined") {
+      localStorage.setItem("abf_auth_token", token);
+    }
   };
 
   const logout = async () => {
     try {
-      await fetch("/api/auth/logout", { method: "POST" });
+      await apiFetch("/api/auth/logout", { method: "POST" });
     } finally {
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("abf_auth_token");
+      }
       setUser(null);
       router.push("/");
     }

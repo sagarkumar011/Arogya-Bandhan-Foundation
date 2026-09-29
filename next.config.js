@@ -20,6 +20,19 @@ const nextConfig = {
       },
     ],
   },
+  async rewrites() {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    if (apiUrl && apiUrl.trim() !== "") {
+      const cleanUrl = apiUrl.replace(/\/+$/, "");
+      return [
+        {
+          source: "/api/:path*",
+          destination: `${cleanUrl}/api/:path*`,
+        },
+      ];
+    }
+    return [];
+  },
 };
 
 module.exports = nextConfig;

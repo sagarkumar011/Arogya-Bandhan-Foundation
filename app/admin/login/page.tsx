@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
+import { apiFetch } from "@/lib/apiClient";
 import { Shield, Lock, Mail, Loader2, KeyRound } from "lucide-react";
 
 export default function AdminLoginPage() {
@@ -22,9 +23,8 @@ export default function AdminLoginPage() {
     setError(null);
 
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await apiFetch("/api/auth/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
@@ -35,7 +35,7 @@ export default function AdminLoginPage() {
         throw new Error("Access denied: You do not have administrative credentials.");
       }
 
-      login(data.user);
+      login(data.user, data.token);
       router.push("/admin/dashboard");
     } catch (err: any) {
       setError(err.message);

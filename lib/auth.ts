@@ -45,6 +45,45 @@ export function verifyToken(token: string): TokenPayload | null {
   }
 }
 
+export const DEMO_ADMIN = {
+  id: "demo-admin-id",
+  userId: "demo-admin-id",
+  email: "admin@arogyabandhan.org",
+  name: "Super Administrator (Demo)",
+  role: "SUPER_ADMIN" as const,
+  phone: "+91 98765 43210",
+  city: "New Delhi",
+  address: "Institutional Area, Sector 18, New Delhi",
+};
+
+export const DEMO_USER = {
+  id: "demo-user-id",
+  userId: "demo-user-id",
+  email: "user@arogyabandhan.org",
+  name: "Standard Member (Demo)",
+  role: "USER" as const,
+  phone: "+91 98765 11111",
+  city: "New Delhi",
+  address: "Rohini, Sector 14, New Delhi",
+};
+
+export function isDemoLoginEnabled(): boolean {
+  return process.env.ENABLE_DEMO_LOGIN !== "false";
+}
+
+export function checkDemoCredentials(email: string, password: string): typeof DEMO_ADMIN | typeof DEMO_USER | null {
+  if (!isDemoLoginEnabled()) return null;
+
+  const normalizedEmail = email.trim().toLowerCase();
+  if (normalizedEmail === "admin@arogyabandhan.org" && password === "Admin@12345") {
+    return DEMO_ADMIN;
+  }
+  if (normalizedEmail === "user@arogyabandhan.org" && password === "User@12345") {
+    return DEMO_USER;
+  }
+  return null;
+}
+
 export async function getSessionUser(req?: NextRequest): Promise<TokenPayload | null> {
   let token: string | undefined;
 
@@ -87,9 +126,14 @@ export async function requireAuth(req: NextRequest, allowedRoles?: string[]) {
 
 export function setAuthCookieHeader(token: string): string {
   const isProd = process.env.NODE_ENV === "production";
-  return `${TOKEN_NAME}=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${7 * 24 * 60 * 60}${isProd ? "; Secure" : ""}`;
+  const sameSite = isProd ? "None" : "Lax";
+  const secure = isProd ? "; Secure" : "";
+  return `${TOKEN_NAME}=${token}; Path=/; HttpOnly; SameSite=${sameSite}; Max-Age=${7 * 24 * 60 * 60}${secure}`;
 }
 
 export function clearAuthCookieHeader(): string {
-  return `${TOKEN_NAME}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0`;
+  const isProd = process.env.NODE_ENV === "production";
+  const sameSite = isProd ? "None" : "Lax";
+  const secure = isProd ? "; Secure" : "";
+  return `${TOKEN_NAME}=; Path=/; HttpOnly; SameSite=${sameSite}; Max-Age=0${secure}`;
 }

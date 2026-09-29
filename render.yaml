@@ -1,39 +1,37 @@
 # ===============================================================
 # AROGYA BANDHAN FOUNDATION - RENDER BLUEPRINT SPECIFICATION
-# Tagline: "Healthy People | Stronger Communities"
-# Production Single Next.js Web Service + Managed PostgreSQL
+# Architecture:
+#   Backend API -> Render Web Service (Express: server/index.ts)
+#   Database    -> Render Managed PostgreSQL
+#   Frontend    -> Vercel (Next.js App with NEXT_PUBLIC_API_URL)
 # ===============================================================
 
 version: "1"
 
 services:
   - type: web
-    name: arogya-bandhan-foundation
+    name: arogya-backend
     runtime: node
     plan: free
     region: oregon
-    buildCommand: npm install && npx prisma generate && npm run build
+    buildCommand: npm install && npx prisma generate
     preDeployCommand: npx prisma migrate deploy
-    startCommand: npm start
-    healthCheckPath: /api/health
+    startCommand: npm run start:server
+    healthCheckPath: /health
     envVars:
       - key: NODE_ENV
         value: production
-      - key: HOSTNAME
-        value: 0.0.0.0
       - key: DATABASE_URL
         fromDatabase:
           name: arogya-postgres-db
           property: connectionString
       - key: JWT_SECRET
         generateValue: true
-      - key: NEXT_PUBLIC_SITE_URL
-        sync: false
-      - key: NEXT_PUBLIC_APP_URL
-        sync: false
-      - key: NEXT_PUBLIC_API_URL
-        sync: false
+      - key: ENABLE_DEMO_LOGIN
+        value: "true"
       - key: CORS_ORIGIN
+        sync: false
+      - key: NEXT_PUBLIC_SITE_URL
         sync: false
       - key: RAZORPAY_KEY_ID
         sync: false
