@@ -104,45 +104,6 @@ export async function POST(req: NextRequest) {
       console.warn("DB login check caught error:", dbErr.message);
       return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
     }
-
-    const token = signToken({
-      userId: user.id,
-      email: user.email,
-      name: user.name,
-      role: user.role as any,
-    });
-
-    // Record admin activity if admin logs in
-    if (user.role === "ADMIN" || user.role === "SUPER_ADMIN") {
-      await prisma.adminActivityLog.create({
-        data: {
-          adminId: user.id,
-          adminEmail: user.email,
-          action: "ADMIN_LOGIN",
-          entity: "AUTH",
-          details: `Admin ${user.email} logged in successfully`,
-        },
-      });
-    }
-
-    const userData = {
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      role: user.role,
-      phone: user.phone,
-      city: user.city,
-    };
-
-    const response = NextResponse.json({
-      success: true,
-      message: "Login successful",
-      user: userData,
-      token,
-    });
-
-    response.headers.set("Set-Cookie", setAuthCookieHeader(token));
-    return response;
   } catch (err: any) {
     if (err instanceof z.ZodError) {
       return NextResponse.json({ error: err.errors[0].message }, { status: 400 });
