@@ -1,3 +1,7 @@
+if (!process.env.DATABASE_URL) {
+  process.env.DATABASE_URL = "postgresql://placeholder:placeholder@localhost:5432/placeholder";
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {

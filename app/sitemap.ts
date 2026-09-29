@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import prisma from "@/lib/prisma";
+import prisma, { isDatabaseConfigured } from "@/lib/prisma";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl =
@@ -30,10 +30,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route === "" ? 1.0 : route === "/donate" || route === "/programs" ? 0.9 : 0.8,
   }));
 
-  // Fetch dynamic content URLs safely
+  // Fetch dynamic content URLs safely if database is connected
   let dynamicRoutes: MetadataRoute.Sitemap = [];
-  try {
-    const [campaigns, programs, blogs] = await Promise.all([
+  if (isDatabaseConfigured()) {
+    try {
+      const [campaigns, programs, blogs] = await Promise.all([
       prisma.campaign.findMany({
         where: { status: "ACTIVE" },
         select: { slug: true, updatedAt: true },
@@ -70,8 +71,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
 
     dynamicRoutes = [...campaignUrls, ...programUrls, ...blogUrls];
-  } catch (err) {
-    console.error("Error generating dynamic sitemap routes:", err);
+    } catch (err) {
+      console.warn("Could not fetch dynamic sitemap routes:", err);
+    }
   }
 
   return [...staticRoutes, ...dynamicRoutes];
