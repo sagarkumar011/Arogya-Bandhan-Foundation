@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
     const validated = createOrderSchema.parse(body);
 
     const receiptRef = `ABF-${Date.now().toString().slice(-6)}`;
+
     const order = await createRazorpayOrder({
       amount: validated.amount,
       currency: "INR",
@@ -41,9 +42,20 @@ export async function POST(req: NextRequest) {
       receiptRef,
     });
   } catch (err: any) {
+    console.error("CREATE ORDER ERROR:", err);
+
     if (err instanceof z.ZodError) {
-      return NextResponse.json({ error: err.errors[0].message }, { status: 400 });
+      return NextResponse.json(
+        { error: err.errors[0].message },
+        { status: 400 }
+      );
     }
-    return NextResponse.json({ error: "Failed to initiate donation order" }, { status: 500 });
+
+    return NextResponse.json(
+      {
+        error: err?.message || "Failed to initiate donation order",
+      },
+      { status: 500 }
+    );
   }
 }
