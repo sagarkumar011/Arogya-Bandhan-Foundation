@@ -1,7 +1,7 @@
 import crypto from "crypto";
 
 export interface CreateOrderParams {
-  amount: number; // in INR rupees
+  amount: number;
   currency?: string;
   receipt: string;
   notes?: Record<string, string>;
@@ -9,80 +9,74 @@ export interface CreateOrderParams {
 
 export interface RazorpayOrderResponse {
   id: string;
-  amount: number; // in paise
+  amount: number;
   currency: string;
   receipt: string;
   status: string;
   keyId: string;
 }
 
-export async function createRazorpayOrder(params: CreateOrderParams): Promise<RazorpayOrderResponse> {
-  const keyId = process.env.RAZORPAY_KEY_ID || "";
-  const keySecret = process.env.RAZORPAY_KEY_SECRET || "";
+export async function createRazorpayOrder(
+  params: CreateOrderParams
+): Promise<RazorpayOrderResponse> {
+  const keyId = process.env.RAZORPAY_KEY_ID;
+  const keySecret = process.env.RAZORPAY_KEY_SECRET;
+
+  if (!keyId || !keySecret) {
+    throw new Error(
+      "Razorpay credentials are not configured on the server."
+    );
+  }
 
   const amountInPaise = Math.round(params.amount * 100);
 
-  // If live credentials are valid, we can call the Razorpay API.
-  // Otherwise, provide a sandbox order generator so testing works without real credentials.
-  const isMockKey = !keyId || keyId.startsWith("rzp_test_arogya") || !keySecret;
+  const auth = Buffer.from(`${keyId}:${keySecret}`).toString("base64");
 
-  if (isMockKey) {
-    const mockOrderId = `order_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-    return {
-      id: mockOrderId,
+  const res = await fetch("https://api.razorpay.com/v1/orders", {
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Basic ${auth}`,
+    },
+
+    body: JSON.stringify({
       amount: amountInPaise,
       currency: params.currency || "INR",
       receipt: params.receipt,
-      status: "created",
-      keyId: keyId || "rzp_test_mock",
-    };
-  }
+      notes: params.notes,
+    }),
+  });
 
-  // Real Razorpay API call
-  try {
-    const auth = Buffer.from(`${keyId}:${keySecret}`).toString("base64");
-    const res = await fetch("https://api.razorpay.com/v1/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Basic ${auth}`,
-      },
-      body: JSON.stringify({
-        amount: amountInPaise,
-        currency: params.currency || "INR",
-        receipt: params.receipt,
-        notes: params.notes,
-      }),
-    });
+  if (!res.ok) {
+    let errorMessage = "Failed to create Razorpay order.";
 
-    if (!res.ok) {
+    try {
       const err = await res.json();
-      throw new Error(err.error?.description || "Failed to create Razorpay order");
-    }
 
-    const data = await res.json();
-    return {
-      id: data.id,
-      amount: data.amount,
-      currency: data.currency,
-      receipt: data.receipt,
-      status: data.status,
-      keyId,
-    };
-  } catch (err: any) {
-    if (process.env.NODE_ENV !== "production") {
-      const mockOrderId = `order_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-      return {
-        id: mockOrderId,
-        amount: amountInPaise,
-        currency: params.currency || "INR",
-        receipt: params.receipt,
-        status: "created",
-        keyId: keyId || "rzp_test_mock",
-      };
-    }
-    throw err;
+      errorMessage =
+        err?.error?.description ||
+        err?.error?.reason ||
+        errorMessage;
+    } catch {}
+
+    throw new Error(errorMessage);
   }
+
+  const data = await res.json();
+
+  if (!data.id) {
+    throw new Error("Razorpay did not return an order ID.");
+  }
+
+  return {
+    id: data.id,
+    amount: data.amount,
+    currency: data.currency,
+    receipt: data.receipt,
+    status: data.status,
+    keyId,
+  };
 }
 
 export function verifyRazorpaySignature(
@@ -92,21 +86,10 @@ export function verifyRazorpaySignature(
 ): boolean {
   const keySecret = process.env.RAZORPAY_KEY_SECRET;
 
-  // In test mode without production secrets:
-  const isMockAllowed =
-    process.env.NODE_ENV !== "production" ||
-    !keySecret ||
-    process.env.RAZORPAY_KEY_ID?.startsWith("rzp_test_arogya");
-
-  if (isMockAllowed && (signature.startsWith("mock_sig_") || signature === "simulated_success_sig")) {
-    return true;
-  }
-
   if (!keySecret) {
     return false;
   }
 
-  // Official HMAC SHA256 verification
   try {
     const generatedSignature = crypto
       .createHmac("sha256", keySecret)
