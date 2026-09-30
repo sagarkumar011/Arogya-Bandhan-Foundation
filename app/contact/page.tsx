@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, Loader2, MessageSquare } from "lucide-react";
+import { apiFetch } from "@/lib/apiClient";
 
 export default function ContactPage() {
   const { t } = useLanguage();
@@ -23,14 +24,16 @@ export default function ContactPage() {
     setError(null);
 
     try {
-      const res = await fetch("/api/contact", {
+      const res = await apiFetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fullName, email, phone, subject, message }),
       });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to send enquiry");
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || data.success === false) {
+        throw new Error(data.error || "Failed to send enquiry");
+      }
 
       setSubmitted(true);
       setFullName("");

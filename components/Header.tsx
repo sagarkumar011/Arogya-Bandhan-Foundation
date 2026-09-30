@@ -19,6 +19,7 @@ import {
   Globe,
 } from "lucide-react";
 import QuickDonationModal from "./QuickDonationModal";
+import BrandLogo from "./BrandLogo";
 
 export default function Header() {
   const pathname = usePathname();
@@ -135,22 +136,18 @@ export default function Header() {
       <header
         className={`sticky top-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-white/95 backdrop-blur-md shadow-md py-2.5"
-            : "bg-white py-3.5 border-b border-slate-100"
+            ? "bg-white/95 backdrop-blur-md shadow-md py-2"
+            : "bg-white py-2.5 sm:py-3 border-b border-slate-100"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 flex items-center justify-between gap-2">
           {/* Official Brand Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative h-12 w-48 sm:h-14 sm:w-56 transition-transform group-hover:scale-[1.02]">
-              <Image
-                src="/logo.png"
-                alt="Arogya Bandhan Foundation"
-                fill
-                priority
-                className="object-contain object-left"
-              />
-            </div>
+          <Link
+            href="/"
+            className="flex items-center group focus:outline-none flex-shrink-0"
+            aria-label="Arogya Bandhan Foundation Home"
+          >
+            <BrandLogo priority />
           </Link>
 
           {/* Desktop Navigation Links */}
@@ -260,17 +257,17 @@ export default function Header() {
           </div>
 
           {/* Mobile Hamburger Button */}
-          <div className="flex items-center gap-2 lg:hidden">
+          <div className="flex items-center gap-1.5 sm:gap-2 lg:hidden flex-shrink-0">
             <button
               onClick={() => setLanguage(language === "en" ? "hi" : "en")}
-              className="px-2 py-1 text-xs font-semibold rounded border border-slate-200 text-[#17324D]"
+              className="px-2 py-1 text-xs font-semibold rounded border border-slate-200 text-[#17324D] hover:border-[#0877C9] transition-colors"
             >
               {language === "en" ? "हिन्दी" : "EN"}
             </button>
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-[#17324D] hover:text-[#087F5B] focus:outline-none"
+              className="p-1.5 sm:p-2 text-[#17324D] hover:text-[#087F5B] focus:outline-none"
               aria-label="Toggle mobile menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6 text-[#087F5B]" />}

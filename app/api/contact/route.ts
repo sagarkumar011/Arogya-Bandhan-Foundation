@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
+import prisma, { isDatabaseConfigured } from "@/lib/prisma";
+import { addInMemoryContact } from "@/lib/inMemoryStore";
 import { z } from "zod";
 
 const contactSchema = z.object({
@@ -15,26 +16,51 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const validated = contactSchema.parse(body);
 
-    const enquiry = await prisma.contactMessage.create({
-      data: {
+    let enquiryId = `contact_${Date.now()}`;
+    let savedToDb = false;
+
+    if (isDatabaseConfigured()) {
+      try {
+        const enquiry = await prisma.contactMessage.create({
+          data: {
+            fullName: validated.fullName,
+            email: validated.email.toLowerCase(),
+            phone: validated.phone || null,
+            subject: validated.subject,
+            message: validated.message,
+            status: "NEW",
+          },
+        });
+        enquiryId = enquiry.id;
+        savedToDb = true;
+      } catch (dbErr) {
+        console.warn("Prisma error during contact message save, using memory store:", dbErr);
+      }
+    }
+
+    if (!savedToDb) {
+      addInMemoryContact({
+        id: enquiryId,
         fullName: validated.fullName,
         email: validated.email.toLowerCase(),
         phone: validated.phone || null,
         subject: validated.subject,
         message: validated.message,
         status: "NEW",
-      },
-    });
+        createdAt: new Date().toISOString(),
+      });
+    }
 
     return NextResponse.json({
       success: true,
       message: "Thank you for reaching out! Our team will contact you shortly.",
-      enquiryId: enquiry.id,
-    });
+      enquiryId,
+    }, { status: 201 });
   } catch (err: any) {
     if (err instanceof z.ZodError) {
       return NextResponse.json({ error: err.errors[0].message }, { status: 400 });
     }
-    return NextResponse.json({ error: "Failed to submit enquiry" }, { status: 500 });
+    console.error("Contact enquiry error:", err);
+    return NextResponse.json({ error: "Failed to submit enquiry. Please try again." }, { status: 500 });
   }
 }

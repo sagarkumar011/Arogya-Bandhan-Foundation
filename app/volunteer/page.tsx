@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { Users, CheckCircle2, Loader2, Sparkles, HeartHandshake } from "lucide-react";
+import { apiFetch } from "@/lib/apiClient";
 
 export default function VolunteerPage() {
   const { t } = useLanguage();
@@ -54,7 +55,7 @@ export default function VolunteerPage() {
     setError(null);
 
     try {
-      const res = await fetch("/api/volunteers/apply", {
+      const res = await apiFetch("/api/volunteers/apply", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -70,12 +71,14 @@ export default function VolunteerPage() {
         }),
       });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to submit application");
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || data.success === false) {
+        throw new Error(data.error || "Failed to submit application. Please try again.");
+      }
 
       setSubmitted(true);
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message || "Failed to submit application");
     } finally {
       setLoading(false);
     }

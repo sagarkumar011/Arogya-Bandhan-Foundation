@@ -11,7 +11,11 @@ export function isPostgresDatabaseUrl(url?: string): boolean {
 }
 
 export function isDatabaseConfigured(): boolean {
-  return isPostgresDatabaseUrl(process.env.DATABASE_URL);
+  const url = process.env.DATABASE_URL;
+  if (!url) return false;
+  const clean = url.trim();
+  if (clean.includes("placeholder")) return false;
+  return isPostgresDatabaseUrl(clean);
 }
 
 export function getDatabaseUrl(): string {

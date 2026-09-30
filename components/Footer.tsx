@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Phone, Mail, MapPin, Heart, Shield, Clock } from "lucide-react";
+import BrandLogo from "./BrandLogo";
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -18,15 +19,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
           {/* Column 1: Logo & Tagline & Mission */}
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="inline-block bg-white p-2.5 rounded-xl shadow-sm">
-              <div className="relative h-12 w-48 sm:h-14 sm:w-56">
-                <Image
-                  src="/logo.png"
-                  alt="Arogya Bandhan Foundation"
-                  fill
-                  className="object-contain object-left"
-                />
-              </div>
+            <Link href="/" className="inline-block bg-white px-3 py-2 rounded-xl shadow-sm hover:shadow transition-shadow">
+              <BrandLogo priority={false} />
             </Link>
 
             <p className="text-sm font-semibold text-[#F58220] tracking-wide">
