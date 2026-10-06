@@ -51,7 +51,7 @@ export const DEMO_ADMIN = {
   email: "admin@arogyabandhan.org",
   name: "Super Administrator (Demo)",
   role: "SUPER_ADMIN" as const,
-  phone: "+91 98765 43210",
+  phone: "+91 75449 90585",
   city: "New Delhi",
   address: "Institutional Area, Sector 18, New Delhi",
 };

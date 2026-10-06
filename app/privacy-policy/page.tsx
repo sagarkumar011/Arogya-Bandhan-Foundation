@@ -51,7 +51,7 @@ export default function PrivacyPolicyPage() {
           </h3>
           <p>
             If you have questions regarding data retention or wish to request data updates, please
-            email us at <strong className="text-[#087F5B]">contact@arogyabandhan.org</strong>.
+            email us at <strong className="text-[#087F5B]">aarogyabandhanfoundation@gmail.com</strong>.
           </p>
         </div>
       </div>

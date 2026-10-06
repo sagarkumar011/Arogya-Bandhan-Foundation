@@ -176,7 +176,7 @@ export function generateDonationReceiptPDF(data: ReceiptData): jsPDF {
   doc.setFontSize(8);
   doc.setTextColor(255, 255, 255);
   doc.text(
-    "Arogya Bandhan Foundation | contact@arogyabandhan.org | www.arogyabandhan.org",
+    "Arogya Bandhan Foundation | aarogyabandhanfoundation@gmail.com | www.arogyabandhan.org",
     42,
     290
   );

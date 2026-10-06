@@ -29,9 +29,9 @@ export default function AdminSettingsPage() {
   const [settings, setSettings] = useState({
     foundationName: "Arogya Bandhan Foundation",
     tagline: "Healthy People | Stronger Communities",
-    email: "info@arogyabandhan.org",
-    phone: "+91 98765 43210",
-    address: "Registered Office, New Delhi - 110001, India",
+    email: "aarogyabandhanfoundation@gmail.com",
+    phone: "+91 75449 90585",
+    address: "Village – Tetarpur, P.O. – Khagaul, Police Station – Danapur, District – Patna, Bihar",
     facebookUrl: "https://facebook.com/arogyabandhan",
     instagramUrl: "https://instagram.com/arogyabandhan",
     youtubeUrl: "https://youtube.com/@arogyabandhan",

@@ -58,18 +58,18 @@ export default function Header() {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-6">
             <a
-              href="tel:+919876543210"
+              href="tel:+917544990585"
               className="flex items-center gap-1.5 text-emerald-100 hover:text-white transition-colors"
             >
               <Phone className="w-3.5 h-3.5 text-[#F58220]" />
-              <span>+91 98765 43210</span>
+              <span>+91 75449 90585</span>
             </a>
             <a
-              href="mailto:contact@arogyabandhan.org"
+              href="mailto:aarogyabandhanfoundation@gmail.com"
               className="flex items-center gap-1.5 text-emerald-100 hover:text-white transition-colors"
             >
               <Mail className="w-3.5 h-3.5 text-[#0877C9]" />
-              <span>contact@arogyabandhan.org</span>
+              <span>aarogyabandhanfoundation@gmail.com</span>
             </a>
             <span className="text-emerald-300/80 font-medium">
               "Healthy People | Stronger Communities"

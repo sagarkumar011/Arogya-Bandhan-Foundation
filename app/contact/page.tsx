@@ -89,8 +89,13 @@ export default function ContactPage() {
                       <MapPin className="w-5 h-5" />
                     </div>
                     <div>
-                      <strong className="text-[#17324D] block text-sm mb-0.5">Address</strong>
-                      <span>Plot 42, Institutional Area, Sector 18, New Delhi - 110001, India</span>
+                      <strong className="text-[#17324D] block text-sm mb-0.5">{t("Address", "पता")}</strong>
+                      <span>
+                        {t(
+                          "Village – Tetarpur, P.O. – Khagaul, Police Station – Danapur, District – Patna, Bihar",
+                          "ग्राम – टेटरपुर, पो० – खगौल, थाना – दानापुर, जिला – पटना, बिहार"
+                        )}
+                      </span>
                     </div>
                   </div>
 
@@ -100,8 +105,8 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <strong className="text-[#17324D] block text-sm mb-0.5">Helpline & Enquiries</strong>
-                      <a href="tel:+919876543210" className="hover:text-[#0877C9]">
-                        +91 98765 43210
+                      <a href="tel:+917544990585" className="hover:text-[#0877C9]">
+                        +91 75449 90585
                       </a>
                     </div>
                   </div>
@@ -112,8 +117,8 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <strong className="text-[#17324D] block text-sm mb-0.5">Official Email</strong>
-                      <a href="mailto:contact@arogyabandhan.org" className="hover:text-[#F58220]">
-                        contact@arogyabandhan.org
+                      <a href="mailto:aarogyabandhanfoundation@gmail.com" className="hover:text-[#F58220]">
+                        aarogyabandhanfoundation@gmail.com
                       </a>
                     </div>
                   </div>

@@ -140,18 +140,23 @@ export default function Footer() {
             <div className="space-y-2.5 text-xs text-emerald-100/80">
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-[#F58220] shrink-0 mt-0.5" />
-                <span>Plot 42, Institutional Area, Sector 18, New Delhi - 110001, India</span>
+                <span>
+                  {t(
+                    "Village – Tetarpur, P.O. – Khagaul, Police Station – Danapur, District – Patna, Bihar",
+                    "ग्राम – टेटरपुर, पो० – खगौल, थाना – दानापुर, जिला – पटना, बिहार"
+                  )}
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-[#0877C9] shrink-0" />
-                <a href="tel:+919876543210" className="hover:text-white">
-                  +91 98765 43210
+                <a href="tel:+917544990585" className="hover:text-white">
+                  +91 75449 90585
                 </a>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-[#087F5B] shrink-0" />
-                <a href="mailto:contact@arogyabandhan.org" className="hover:text-white">
-                  contact@arogyabandhan.org
+                <a href="mailto:aarogyabandhanfoundation@gmail.com" className="hover:text-white">
+                  aarogyabandhanfoundation@gmail.com
                 </a>
               </div>
               <div className="flex items-center gap-2">
