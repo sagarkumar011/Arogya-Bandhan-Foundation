@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import prisma, { isDatabaseConfigured } from "@/lib/prisma";
+import { ALL_PROGRAMS } from "@/lib/programs-data";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl =
@@ -56,7 +57,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.85,
     }));
 
-    const programUrls = programs.map((p) => ({
+    const programsToMap = programs.length > 0 ? programs : ALL_PROGRAMS;
+    const programUrls = programsToMap.map((p: any) => ({
       url: `${siteUrl}/programs/${p.slug}`,
       lastModified: p.updatedAt || new Date(),
       changeFrequency: "weekly" as const,

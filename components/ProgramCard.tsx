@@ -15,6 +15,11 @@ import {
   Award,
   Users,
   LifeBuoy,
+  Sparkles,
+  HeartHandshake,
+  Utensils,
+  Baby,
+  Droplet,
   ArrowRight,
 } from "lucide-react";
 
@@ -40,6 +45,11 @@ const iconMap: Record<string, React.ElementType> = {
   Award,
   Users,
   LifeBuoy,
+  Sparkles,
+  HeartHandshake,
+  Utensils,
+  Baby,
+  Droplet,
 };
 
 export default function ProgramCard({ program }: { program: ProgramItem }) {

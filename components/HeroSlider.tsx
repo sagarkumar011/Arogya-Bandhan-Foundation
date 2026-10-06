@@ -73,7 +73,7 @@ const SLIDES: Slide[] = [
     ctaText: "FEED A FAMILY",
     ctaLink: "/donate",
     secondaryCtaText: "SUPPORT FOOD DRIVES",
-    secondaryCtaLink: "/programs/food-distribution",
+    secondaryCtaLink: "/programs/food-drives",
     campaignCategory: "Food Distribution",
   },
   {
@@ -87,7 +87,7 @@ const SLIDES: Slide[] = [
     ctaText: "SUPPORT EDUCATION",
     ctaLink: "/donate",
     secondaryCtaText: "EXPLORE CHILD WELFARE",
-    secondaryCtaLink: "/programs/education-support",
+    secondaryCtaLink: "/programs/child-education",
     campaignCategory: "Education",
   },
 ];

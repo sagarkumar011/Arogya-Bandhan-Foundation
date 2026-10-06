@@ -48,8 +48,8 @@ export default async function ProgramsPage() {
       <section className="py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {programs.map((program) => (
-              <ProgramCard key={program.id} program={program} />
+            {displayPrograms.map((program) => (
+              <ProgramCard key={program.id || program.slug} program={program} />
             ))}
           </div>
         </div>

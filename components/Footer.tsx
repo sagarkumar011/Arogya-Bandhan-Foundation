@@ -95,7 +95,7 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-xs text-emerald-100/80">
               <li>
-                <Link href="/programs/food-distribution" className="hover:text-white transition-colors">
+                <Link href="/programs/food-drives" className="hover:text-white transition-colors">
                   {t("Food Distribution & Annadaan", "अन्नदान एवं भोजन वितरण")}
                 </Link>
               </li>
@@ -110,7 +110,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/programs/education-support" className="hover:text-white transition-colors">
+                <Link href="/programs/child-education" className="hover:text-white transition-colors">
                   {t("Child Education & Vidyadaan", "शिक्षा सहायता एवं विद्यादान")}
                 </Link>
               </li>

@@ -479,7 +479,7 @@ export default async function HomePage() {
                   Feed a Family
                 </Link>
                 <Link
-                  href="/programs/food-distribution"
+                  href="/programs/food-drives"
                   className="px-6 py-3.5 rounded-2xl text-xs font-bold text-slate-700 hover:text-[#17324D] border border-slate-300 transition-all"
                 >
                   View Food Drives
@@ -531,7 +531,7 @@ export default async function HomePage() {
                   Support a Child
                 </Link>
                 <Link
-                  href="/programs/education-support"
+                  href="/programs/child-education"
                   className="px-6 py-3.5 rounded-2xl text-xs font-bold text-slate-700 hover:text-[#17324D] border border-slate-300 transition-all"
                 >
                   Education Programs
