@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Phone, Mail, MapPin, Heart, Shield, Clock } from "lucide-react";
 import BrandLogo from "./BrandLogo";
+import PhoneActionMenu from "./PhoneActionMenu";
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -148,10 +149,11 @@ export default function Footer() {
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-[#0877C9] shrink-0" />
-                <a href="tel:+917544990585" className="hover:text-white">
-                  +91 75449 90585
-                </a>
+                <PhoneActionMenu
+                  position="top"
+                  triggerClassName="flex items-center gap-2 text-emerald-100/90 hover:text-white transition-colors"
+                  iconClassName="w-4 h-4 text-[#0877C9] shrink-0"
+                />
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-[#087F5B] shrink-0" />

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, Loader2, MessageSquare } from "lucide-react";
 import { apiFetch } from "@/lib/apiClient";
+import PhoneActionMenu from "@/components/PhoneActionMenu";
 
 export default function ContactPage() {
   const { t } = useLanguage();
@@ -105,9 +106,10 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <strong className="text-[#17324D] block text-sm mb-0.5">Helpline & Enquiries</strong>
-                      <a href="tel:+917544990585" className="hover:text-[#0877C9]">
-                        +91 75449 90585
-                      </a>
+                      <PhoneActionMenu
+                        showIcon={false}
+                        triggerClassName="text-slate-600 hover:text-[#0877C9] font-medium"
+                      />
                     </div>
                   </div>
 

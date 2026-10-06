@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import QuickDonationModal from "./QuickDonationModal";
 import BrandLogo from "./BrandLogo";
+import PhoneActionMenu from "./PhoneActionMenu";
 
 export default function Header() {
   const pathname = usePathname();
@@ -57,13 +58,10 @@ export default function Header() {
       <div className="bg-[#0B2F2A] text-white text-xs py-2 px-4 border-b border-emerald-900/40 hidden md:block">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-6">
-            <a
-              href="tel:+917544990585"
-              className="flex items-center gap-1.5 text-emerald-100 hover:text-white transition-colors"
-            >
-              <Phone className="w-3.5 h-3.5 text-[#F58220]" />
-              <span>+91 75449 90585</span>
-            </a>
+            <PhoneActionMenu
+              triggerClassName="flex items-center gap-1.5 text-emerald-100 hover:text-white transition-colors"
+              iconClassName="w-3.5 h-3.5 text-[#F58220]"
+            />
             <a
               href="mailto:aarogyabandhanfoundation@gmail.com"
               className="flex items-center gap-1.5 text-emerald-100 hover:text-white transition-colors"
@@ -343,6 +341,13 @@ export default function Header() {
                   {t("User Login / Register", "यूजर लॉगिन / रजिस्टर")}
                 </Link>
               )}
+
+              <div className="pt-2 border-t border-slate-100 flex items-center justify-center">
+                <PhoneActionMenu
+                  triggerClassName="flex items-center gap-2 text-xs font-semibold text-slate-700 hover:text-[#087F5B] py-1.5 px-3 rounded-lg bg-slate-50 border border-slate-200/60 w-full justify-center"
+                  iconClassName="w-4 h-4 text-[#F58220]"
+                />
+              </div>
             </div>
           </div>
         )}
