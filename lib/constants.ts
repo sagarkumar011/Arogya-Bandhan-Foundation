@@ -18,9 +18,10 @@ export const BRAND = {
   mission:
     "Arogya Bandhan Foundation works for the welfare of communities through healthcare camps, education, food support, social welfare, women and child development, mass marriage initiatives and community service.",
   phone: "+91 75449 90585",
+  additionalPhone: "+91 76438 72805",
   email: "aarogyabandhanfoundation@gmail.com",
-  address: "Village – Tetarpur, P.O. – Khagaul, Police Station – Danapur, District – Patna, Bihar",
-  addressHindi: "ग्राम – टेटरपुर, पो० – खगौल, थाना – दानापुर, जिला – पटना, बिहार",
+  address: "Village - Haridaspur, P.O. - Khagaul, Police Station - Rupaspur, District - Patna, Bihar",
+  addressHindi: "ग्राम – हरिदासपुर, पो० – खगौल, थाना – रूपसपुर, जिला – पटना, बिहार",
   officeHours: "Monday - Saturday: 9:00 AM - 6:00 PM IST",
   colors: {
     primaryGreen: "#087F5B",

@@ -93,8 +93,8 @@ export default function ContactPage() {
                       <strong className="text-[#17324D] block text-sm mb-0.5">{t("Address", "पता")}</strong>
                       <span>
                         {t(
-                          "Village – Tetarpur, P.O. – Khagaul, Police Station – Danapur, District – Patna, Bihar",
-                          "ग्राम – टेटरपुर, पो० – खगौल, थाना – दानापुर, जिला – पटना, बिहार"
+                          "Village - Haridaspur, P.O. - Khagaul, Police Station - Rupaspur, District - Patna, Bihar",
+                          "ग्राम – हरिदासपुर, पो० – खगौल, थाना – रूपसपुर, जिला – पटना, बिहार"
                         )}
                       </span>
                     </div>
@@ -104,12 +104,29 @@ export default function ContactPage() {
                     <div className="w-10 h-10 rounded-xl bg-[#EAF4FB] text-[#0877C9] flex items-center justify-center shrink-0">
                       <Phone className="w-5 h-5" />
                     </div>
-                    <div>
+                    <div className="space-y-1">
                       <strong className="text-[#17324D] block text-sm mb-0.5">Helpline & Enquiries</strong>
                       <PhoneActionMenu
                         showIcon={false}
                         triggerClassName="text-slate-600 hover:text-[#0877C9] font-medium"
                       />
+                      <div className="flex items-center gap-2 text-[11px] text-slate-500 pt-1 flex-wrap">
+                        <a href="tel:+917544990585" className="hover:text-[#087F5B] hover:underline font-medium">
+                          Call +91 75449 90585
+                        </a>
+                        <span>•</span>
+                        <a href="tel:+917643872805" className="hover:text-[#0877C9] hover:underline font-medium">
+                          Call +91 76438 72805
+                        </a>
+                        <span>•</span>
+                        <a href="https://wa.me/917544990585" target="_blank" rel="noopener noreferrer" className="hover:text-[#25D366] hover:underline font-medium">
+                          WhatsApp (1)
+                        </a>
+                        <span>•</span>
+                        <a href="https://wa.me/917643872805" target="_blank" rel="noopener noreferrer" className="hover:text-[#25D366] hover:underline font-medium">
+                          WhatsApp (2)
+                        </a>
+                      </div>
                     </div>
                   </div>
 
