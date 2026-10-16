@@ -689,7 +689,7 @@ async function main() {
     { key: "mission", value: "Arogya Bandhan Foundation works for the welfare of communities through healthcare camps, education, food support, social welfare, women and child development, mass marriage initiatives and community service." },
     { key: "email", value: "aarogyabandhanfoundation@gmail.com" },
     { key: "phone", value: "+91 75449 90585, +91 76438 72805" },
-    { key: "address", value: "Village - Haridaspur, P.O. - Khagaul, Police Station - Rupaspur, District - Patna, Bihar" },
+    { key: "address", value: "VILL- DAHIBHATTA, TOLA- DAHIBHATTA, PANCH- NISIAWAN, BLOCK- MASAURHI" },
     { key: "facebookUrl", value: "https://facebook.com/arogyabandhan" },
     { key: "instagramUrl", value: "https://instagram.com/arogyabandhan" },
     { key: "youtubeUrl", value: "https://youtube.com/@arogyabandhan" },

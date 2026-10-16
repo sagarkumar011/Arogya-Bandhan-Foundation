@@ -143,8 +143,8 @@ export default function Footer() {
                 <MapPin className="w-4 h-4 text-[#F58220] shrink-0 mt-0.5" />
                 <span>
                   {t(
-                    "Village - Haridaspur, P.O. - Khagaul, Police Station - Rupaspur, District - Patna, Bihar",
-                    "ग्राम – हरिदासपुर, पो० – खगौल, थाना – रूपसपुर, जिला – पटना, बिहार"
+                    "VILL- DAHIBHATTA, TOLA- DAHIBHATTA, PANCH- NISIAWAN, BLOCK- MASAURHI",
+                    "ग्राम- दहीभट्ठा, टोला- दहीभट्ठा, पंचा- निसियावां, ब्लॉक- मसौढ़ी"
                   )}
                 </span>
               </div>

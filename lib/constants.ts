@@ -20,8 +20,8 @@ export const BRAND = {
   phone: "+91 75449 90585",
   additionalPhone: "+91 76438 72805",
   email: "aarogyabandhanfoundation@gmail.com",
-  address: "Village - Haridaspur, P.O. - Khagaul, Police Station - Rupaspur, District - Patna, Bihar",
-  addressHindi: "ग्राम – हरिदासपुर, पो० – खगौल, थाना – रूपसपुर, जिला – पटना, बिहार",
+  address: "VILL- DAHIBHATTA, TOLA- DAHIBHATTA, PANCH- NISIAWAN, BLOCK- MASAURHI",
+  addressHindi: "ग्राम- दहीभट्ठा, टोला- दहीभट्ठा, पंचा- निसियावां, ब्लॉक- मसौढ़ी",
   officeHours: "Monday - Saturday: 9:00 AM - 6:00 PM IST",
   colors: {
     primaryGreen: "#087F5B",

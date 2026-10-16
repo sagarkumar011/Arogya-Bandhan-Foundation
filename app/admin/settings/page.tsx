@@ -31,7 +31,7 @@ export default function AdminSettingsPage() {
     tagline: "Healthy People | Stronger Communities",
     email: "aarogyabandhanfoundation@gmail.com",
     phone: "+91 75449 90585, +91 76438 72805",
-    address: "Village - Haridaspur, P.O. - Khagaul, Police Station - Rupaspur, District - Patna, Bihar",
+    address: "VILL- DAHIBHATTA, TOLA- DAHIBHATTA, PANCH- NISIAWAN, BLOCK- MASAURHI",
     facebookUrl: "https://facebook.com/arogyabandhan",
     instagramUrl: "https://instagram.com/arogyabandhan",
     youtubeUrl: "https://youtube.com/@arogyabandhan",

@@ -93,8 +93,8 @@ export default function ContactPage() {
                       <strong className="text-[#17324D] block text-sm mb-0.5">{t("Address", "पता")}</strong>
                       <span>
                         {t(
-                          "Village - Haridaspur, P.O. - Khagaul, Police Station - Rupaspur, District - Patna, Bihar",
-                          "ग्राम – हरिदासपुर, पो० – खगौल, थाना – रूपसपुर, जिला – पटना, बिहार"
+                          "VILL- DAHIBHATTA, TOLA- DAHIBHATTA, PANCH- NISIAWAN, BLOCK- MASAURHI",
+                          "ग्राम- दहीभट्ठा, टोला- दहीभट्ठा, पंचा- निसियावां, ब्लॉक- मसौढ़ी"
                         )}
                       </span>
                     </div>
