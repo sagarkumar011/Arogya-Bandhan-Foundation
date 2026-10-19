@@ -32,13 +32,16 @@ export default async function ProgramsPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <div className="max-w-3xl space-y-3">
             <span className="px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/10 text-emerald-300 border border-white/20">
-              Community Service & Welfare Pillars
+              Community Service & Welfare Pillars • हमारी सामाजिक पहल
             </span>
             <h1 className="font-heading font-black text-3xl sm:text-5xl text-white tracking-tight">
               Our Work Across Key Social Verticals
             </h1>
+            <p className="text-base text-emerald-200 font-semibold italic">
+              “सेवा केवल एक कार्य नहीं, बल्कि समाज के प्रति हमारी जिम्मेदारी है।”
+            </p>
             <p className="text-sm sm:text-base text-emerald-100/90 leading-relaxed">
-              Targeted, sustained interventions designed to serve humanity: food security, dignified mass marriages, school kits for rural children, women self-reliance, emergency relief, and community health camps.
+              “Service is not merely an action, but our shared responsibility towards society.” — Targeted, sustained interventions designed to serve humanity: food security, dignified mass marriages, school kits for rural children, women self-reliance, emergency relief, and community health camps.
             </p>
           </div>
         </div>

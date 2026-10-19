@@ -263,13 +263,16 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <span className="px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-100 text-[#087F5B]">
-              Compassion in Action
+              Compassion in Action • हमारी सामाजिक पहल
             </span>
             <h2 className="font-heading font-black text-3xl sm:text-4xl text-[#17324D] tracking-tight">
-              OUR WORK
+              OUR WORK / हमारी सामाजिक पहल
             </h2>
-            <p className="text-sm text-slate-600 max-w-2xl mx-auto">
-              Creating meaningful change through service, compassion, and community action. Explore our key social welfare pillars.
+            <p className="text-sm sm:text-base font-semibold text-[#087F5B]">
+              “सेवा केवल एक कार्य नहीं, बल्कि समाज के प्रति हमारी जिम्मेदारी है।”
+            </p>
+            <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto">
+              “Service is not merely an action, but our shared responsibility towards society.” — Creating meaningful change through service, compassion, and community action.
             </p>
           </div>
 
@@ -370,34 +373,42 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-6 space-y-6">
               <span className="px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-[#F58220]/15 text-[#F58220] border border-[#F58220]/30">
-                Samuhik Vivah Mahotsav
+                💍 Mass Marriage • सामूहिक विवाह
               </span>
               <h2 className="font-heading font-black text-3xl sm:text-4xl text-[#17324D] tracking-tight">
                 Supporting Families,{" "}
                 <span className="text-[#F58220]">Celebrating New Beginnings</span>
               </h2>
-              <p className="text-slate-700 text-sm sm:text-base leading-relaxed">
-                For impoverished families, wedding expenses frequently lead to lifelong moneylender debt and acute distress.
-                Arogya Bandhan Foundation organizes traditional, dignified <strong>Samuhik Vivah (Mass Marriage)</strong> ceremonies
-                where couples are provided with bridal attire, household starter essentials, cooking utensils, bedding, and community blessings.
+              <div className="p-3.5 rounded-xl bg-amber-50 border-l-4 border-[#F58220] text-xs sm:text-sm font-semibold text-amber-950 italic">
+                “एक नई शुरुआत, सम्मान और खुशियों के साथ।” / “A new beginning, with dignity and happiness.”
+              </div>
+              <p className="text-slate-700 text-sm leading-relaxed">
+                Arogya Bandhan Foundation का उद्देश्य जरूरतमंद एवं आर्थिक रूप से कमजोर परिवारों को विवाह के अवसर पर सहयोग प्रदान करना और उन्हें सम्मानपूर्वक नई जिंदगी की शुरुआत करने में सहायता देना है।
+              </p>
+              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                We believe that financial hardship should never become a barrier to a family&apos;s happiness or a milestone as sacred as marriage.
               </p>
 
-              <div className="space-y-3 pt-2">
-                <div className="flex items-center gap-3 text-sm text-slate-800">
-                  <CheckCircle2 className="w-5 h-5 text-[#F58220] shrink-0" />
-                  <span>Dignified traditional Vedic ceremonies without cost to families</span>
+              <div className="space-y-2.5 pt-1">
+                <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-800">
+                  <span className="text-base leading-none">🌸</span>
+                  <span><strong>विवाह सहयोग:</strong> जरूरतमंद परिवारों को विवाह के अवसर पर सहयोग प्रदान करना (Providing support to underprivileged families).</span>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-slate-800">
-                  <CheckCircle2 className="w-5 h-5 text-[#F58220] shrink-0" />
-                  <span>Complete household starter kits, utensils, clothing & blankets</span>
+                <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-800">
+                  <span className="text-base leading-none">🏛️</span>
+                  <span><strong>सम्मानजनक आयोजन:</strong> विवाह समारोह को सम्मानजनक और व्यवस्थित तरीके से आयोजित करना (Dignified and orderly ceremonies).</span>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-slate-800">
-                  <CheckCircle2 className="w-5 h-5 text-[#F58220] shrink-0" />
-                  <span>Official legal marriage registration support & community feast</span>
+                <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-800">
+                  <span className="text-base leading-none">🎁</span>
+                  <span><strong>आवश्यक सहायता:</strong> वर-वधू एवं परिवारों को उपहार व सामग्री उपलब्ध कराना (Household starter kits & essentials).</span>
                 </div>
               </div>
 
-              <div className="pt-4 flex items-center gap-4">
+              <div className="p-3 rounded-xl bg-orange-50/80 border border-orange-200 text-xs italic text-orange-950">
+                &gt; “जहाँ सहयोग से दो दिल जुड़ते हैं, वहाँ एक बेहतर समाज की नींव रखी जाती है।”
+              </div>
+
+              <div className="pt-2 flex items-center gap-4">
                 <Link
                   href="/donate"
                   className="btn-accent px-8 py-3.5 rounded-2xl text-xs font-bold uppercase tracking-wider shadow-md hover:shadow-lg transition-all"
@@ -408,7 +419,7 @@ export default async function HomePage() {
                   href="/programs/mass-marriage"
                   className="px-6 py-3.5 rounded-2xl text-xs font-bold text-slate-700 hover:text-[#17324D] border border-slate-300 transition-all"
                 >
-                  Program Details
+                  Program Details • विवरण
                 </Link>
               </div>
             </div>
@@ -444,34 +455,42 @@ export default async function HomePage() {
 
             <div className="lg:col-span-6 order-1 lg:order-2 space-y-6">
               <span className="px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-100 text-[#087F5B]">
-                Annapurna Food & Nutrition
+                🍲 Food Drives • अन्नदान एवं भोजन वितरण
               </span>
               <h2 className="font-heading font-black text-3xl sm:text-4xl text-[#17324D] tracking-tight">
                 Because No One Should{" "}
                 <span className="text-[#087F5B]">Go To Bed Hungry</span>
               </h2>
-              <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                Hunger robs children of education and elders of health. Our <strong>Annapurna Food Program</strong>
-                operates weekly community kitchens, delivers hot nutritious meals to slum settlements, and provides
-                monthly grocery kits (flour, rice, dal, oil) to destitute elderly and daily-wage families.
+              <div className="p-3.5 rounded-xl bg-emerald-50 border-l-4 border-[#087F5B] text-xs sm:text-sm font-semibold text-emerald-950 italic">
+                “कोई भी व्यक्ति भूखा न सोए — यही हमारी छोटी सी कोशिश है।” / “May no person sleep hungry — that is our earnest endeavor.”
+              </div>
+              <p className="text-slate-700 text-sm leading-relaxed">
+                हमारा मानना है कि भोजन केवल एक आवश्यकता नहीं, बल्कि हर व्यक्ति का सम्मान और जीवन की मूल जरूरत है। हमारी पहल का उद्देश्य जरूरतमंद, गरीब एवं वंचित लोगों तक भोजन सहायता पहुँचाना है।
+              </p>
+              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                Food is a fundamental human right and a mark of dignity. Our Food Drives deliver hot meals and monthly grocery ration kits to vulnerable households.
               </p>
 
-              <div className="space-y-3 pt-2">
-                <div className="flex items-center gap-3 text-sm text-slate-800">
-                  <CheckCircle2 className="w-5 h-5 text-[#087F5B] shrink-0" />
-                  <span>Fresh, wholesome, hygienic hot meals served weekly</span>
+              <div className="space-y-2.5 pt-1">
+                <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-800">
+                  <span className="text-base leading-none">🍛</span>
+                  <span><strong>भोजन वितरण:</strong> जरूरतमंद लोगों के लिए गर्म भोजन वितरण (Nutritious meals for underprivileged individuals).</span>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-slate-800">
-                  <CheckCircle2 className="w-5 h-5 text-[#087F5B] shrink-0" />
-                  <span>Dry ration kits for destitute elderly, widows and disabled citizens</span>
+                <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-800">
+                  <span className="text-base leading-none">📦</span>
+                  <span><strong>खाद्य सामग्री:</strong> गरीब एवं वंचित परिवारों तक आवश्यक राशन सामग्री (Essential grocery packages & dry ration kits).</span>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-slate-800">
-                  <CheckCircle2 className="w-5 h-5 text-[#087F5B] shrink-0" />
-                  <span>Fortified nutrition supplements for undernourished infants and mothers</span>
+                <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-800">
+                  <span className="text-base leading-none">🧒</span>
+                  <span><strong>बच्चों व बुजुर्गों हेतु:</strong> पोषण एवं विशेष खाद्य सहायता (Targeted nutritional aid for children & seniors).</span>
                 </div>
               </div>
 
-              <div className="pt-4 flex items-center gap-4">
+              <div className="p-3 rounded-xl bg-emerald-50/80 border border-emerald-200 text-xs italic text-emerald-950">
+                &gt; “एक भोजन किसी का एक दिन बदल सकता है, लेकिन आपकी छोटी सी मदद किसी की जिंदगी में उम्मीद जगा सकती है।”
+              </div>
+
+              <div className="pt-2 flex items-center gap-4">
                 <Link
                   href="/donate"
                   className="btn-primary px-8 py-3.5 rounded-2xl text-xs font-bold uppercase tracking-wider shadow-md hover:shadow-lg transition-all"
@@ -482,7 +501,7 @@ export default async function HomePage() {
                   href="/programs/food-drives"
                   className="px-6 py-3.5 rounded-2xl text-xs font-bold text-slate-700 hover:text-[#17324D] border border-slate-300 transition-all"
                 >
-                  View Food Drives
+                  View Food Drives • विवरण
                 </Link>
               </div>
             </div>
@@ -496,34 +515,42 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-6 space-y-6">
               <span className="px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-100 text-[#0877C9]">
-                Children & Education (Vidyadaan)
+                📚 Child Education • बाल शिक्षा सहायता
               </span>
               <h2 className="font-heading font-black text-3xl sm:text-4xl text-[#17324D] tracking-tight">
                 Every Child Deserves{" "}
                 <span className="text-[#0877C9]">An Opportunity to Learn</span>
               </h2>
-              <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                Education is the most powerful tool to break generational poverty. Our <strong>Vidyadaan Project</strong>
-                equips thousands of first-generation learners with school bags, textbooks, notebooks, solar study lamps,
-                and weekend volunteer tutoring centers.
+              <div className="p-3.5 rounded-xl bg-blue-50 border-l-4 border-[#0877C9] text-xs sm:text-sm font-semibold text-blue-950 italic">
+                “हर बच्चे को शिक्षा, हर बच्चे को बेहतर भविष्य।” / “Education for every child, a better future for every child.”
+              </div>
+              <p className="text-slate-700 text-sm leading-relaxed">
+                हमारा मानना है कि शिक्षा किसी भी बच्चे के जीवन को बदलने की सबसे मजबूत शक्ति है। आर्थिक परिस्थितियाँ किसी बच्चे के सपनों और सीखने की क्षमता के बीच बाधा नहीं बननी चाहिए।
+              </p>
+              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                Every child is brimming with talent and potential. With proper guidance, education, and support, children build a brighter future for their families and society.
               </p>
 
-              <div className="space-y-3 pt-2">
-                <div className="flex items-center gap-3 text-sm text-slate-800">
-                  <CheckCircle2 className="w-5 h-5 text-[#0877C9] shrink-0" />
-                  <span>Complete school starter kits (bag, textbooks, stationery)</span>
+              <div className="space-y-2.5 pt-1">
+                <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-800">
+                  <span className="text-base leading-none">🎒</span>
+                  <span><strong>शैक्षणिक सामग्री:</strong> बस्ते, पुस्तकें, कॉपियाँ और स्टेशनरी उपलब्ध कराना (School bags & learning supplies).</span>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-slate-800">
-                  <CheckCircle2 className="w-5 h-5 text-[#0877C9] shrink-0" />
-                  <span>After-school remedial study centers preventing rural dropouts</span>
+                <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-800">
+                  <span className="text-base leading-none">🏫</span>
+                  <span><strong>शिक्षा से जुड़ाव:</strong> कमजोर परिवारों के बच्चों को स्कूल से जोड़ना (Enrollment & retention awareness).</span>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-slate-800">
-                  <CheckCircle2 className="w-5 h-5 text-[#0877C9] shrink-0" />
-                  <span>Sports, creative arts, and digital literacy workshops</span>
+                <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-800">
+                  <span className="text-base leading-none">👧👦</span>
+                  <span><strong>सर्वांगीण विकास:</strong> बच्चों में पढ़ाई के प्रति रुचि व आत्मविश्वास बढ़ाना (Holistic student development).</span>
                 </div>
               </div>
 
-              <div className="pt-4 flex items-center gap-4">
+              <div className="p-3 rounded-xl bg-blue-50/80 border border-blue-200 text-xs italic text-blue-950">
+                &gt; “एक बच्चे की शिक्षा में किया गया सहयोग, उसके पूरे भविष्य को बदलने की शुरुआत हो सकता है।”
+              </div>
+
+              <div className="pt-2 flex items-center gap-4">
                 <Link
                   href="/donate"
                   className="btn-accent px-8 py-3.5 rounded-2xl text-xs font-bold uppercase tracking-wider shadow-md hover:shadow-lg transition-all"
@@ -534,7 +561,7 @@ export default async function HomePage() {
                   href="/programs/child-education"
                   className="px-6 py-3.5 rounded-2xl text-xs font-bold text-slate-700 hover:text-[#17324D] border border-slate-300 transition-all"
                 >
-                  Education Programs
+                  Education Programs • विवरण
                 </Link>
               </div>
             </div>
@@ -568,22 +595,27 @@ export default async function HomePage() {
                     className="object-cover"
                   />
                   <div className="absolute top-3 left-3 bg-[#0B2F2A]/85 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase">
-                    Women Livelihood
+                    👩 Women Upliftment • महिला सशक्तिकरण
                   </div>
+                </div>
+                <div className="p-2.5 rounded-xl bg-emerald-50 border-l-4 border-[#087F5B] text-xs font-semibold text-emerald-950 italic">
+                  “सशक्त महिला, सशक्त परिवार और सशक्त समाज।”
                 </div>
                 <h3 className="font-heading font-black text-2xl text-[#17324D]">
                   Empowering Women, Strengthening Families
                 </h3>
                 <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
-                  Vocational skill training in tailoring, garment crafting, computer basics, and financial literacy.
-                  Graduates receive free sewing machines to launch home enterprises.
+                  महिलाओं को आत्मनिर्भर, जागरूक और सशक्त बनाने की दिशा में प्रयास। कौशल विकास (सिलाई-कढ़ाई), स्वास्थ्य जागरूकता और रोजगार के अवसरों से जोड़ना।
                 </p>
+                <div className="p-2.5 rounded-xl bg-slate-100 text-[11px] text-slate-700 italic border border-slate-200">
+                  &gt; “जब एक महिला सशक्त होती है, तो एक परिवार मजबूत होता है और समाज आगे बढ़ता है।”
+                </div>
               </div>
               <Link
                 href="/programs/women-empowerment"
                 className="inline-flex items-center gap-2 font-bold text-xs uppercase tracking-wider text-[#087F5B]"
               >
-                <span>Support Women Empowerment</span>
+                <span>Support Women Empowerment • विवरण</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -599,22 +631,27 @@ export default async function HomePage() {
                     className="object-cover"
                   />
                   <div className="absolute top-3 left-3 bg-[#0B2F2A]/85 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase">
-                    Healthcare Within Reach
+                    🏥 Health Camps • स्वास्थ्य जाँच शिविर
                   </div>
                 </div>
+                <div className="p-2.5 rounded-xl bg-blue-50 border-l-4 border-[#0877C9] text-xs font-semibold text-blue-950 italic">
+                  “स्वस्थ समाज की ओर एक सार्थक कदम”
+                </div>
                 <h3 className="font-heading font-black text-2xl text-[#17324D]">
-                  Community Health Camps & Eye Screening
+                  Community Health Camps & Medical Care
                 </h3>
                 <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
-                  Free general physician checkups, blood sugar & BP tests, cataract evaluations, free prescription glasses,
-                  and life-saving medicine distribution in remote villages.
+                  सामान्य स्वास्थ्य जाँच, रक्तचाप एवं शुगर की जाँच, चिकित्सीय परामर्श, महिलाओं व बच्चों के स्वास्थ्य एवं पोषण संबंधी मार्गदर्शन।
                 </p>
+                <div className="p-2.5 rounded-xl bg-slate-100 text-[11px] text-slate-700 italic border border-slate-200">
+                  &gt; “स्वस्थ व्यक्ति, स्वस्थ परिवार और स्वस्थ समाज — यही हमारे प्रयास की दिशा है।”
+                </div>
               </div>
               <Link
                 href="/programs/health-camps"
                 className="inline-flex items-center gap-2 font-bold text-xs uppercase tracking-wider text-[#0877C9]"
               >
-                <span>Support Health Camps</span>
+                <span>Support Health Camps • विवरण</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>

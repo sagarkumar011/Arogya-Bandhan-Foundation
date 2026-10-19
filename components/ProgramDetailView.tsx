@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Heart, Users, CheckCircle2, ArrowRight, ArrowLeft } from "lucide-react";
 import { ProgramData, getOtherPrograms } from "@/lib/programs-data";
+import BilingualPdfSection from "@/components/BilingualPdfSection";
 
 export default function ProgramDetailView({ program }: { program: ProgramData }) {
   const otherPrograms = getOtherPrograms(program.slug, 4);
@@ -89,8 +90,15 @@ export default function ProgramDetailView({ program }: { program: ProgramData })
                 </ul>
               </div>
 
+              {/* Official Bilingual PDF Content Documentation */}
+              {program.bilingualDoc && (
+                <div className="pt-2">
+                  <BilingualPdfSection doc={program.bilingualDoc} />
+                </div>
+              )}
+
               {/* Back to Our Work Action */}
-              <div className="pt-2">
+              <div className="pt-4 border-t border-slate-100">
                 <Link
                   href="/programs"
                   className="inline-flex items-center gap-2 text-xs font-bold text-[#087F5B] hover:text-[#066b4c] transition-colors"

@@ -23,6 +23,7 @@ export async function generateMetadata({
 
 export function generateStaticParams() {
   return [
+    { slug: "social-welfare" },
     { slug: "food-distribution" },
     { slug: "child-welfare" },
     { slug: "education-support" },
