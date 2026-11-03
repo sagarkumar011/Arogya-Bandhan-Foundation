@@ -33,7 +33,7 @@ export function generateDonationSuccessEmail(donorName: string, amount: number, 
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL ||
     process.env.RENDER_EXTERNAL_URL ||
-    "http://localhost:3000";
+    "https://www.arogyabandhanfoundation.co.in";
 
   return `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #DCE5EC; border-radius: 8px;">

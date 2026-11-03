@@ -3,12 +3,12 @@ import { ALL_PROGRAMS } from "./programs-data";
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ||
   process.env.RENDER_EXTERNAL_URL ||
-  "http://localhost:3000";
+  "https://www.arogyabandhanfoundation.co.in";
 
 export const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
   process.env.RENDER_EXTERNAL_URL ||
-  "http://localhost:3000";
+  "https://www.arogyabandhanfoundation.co.in";
 
 export const BRAND = {
   name: "Arogya Bandhan Foundation",

@@ -37,6 +37,21 @@ const nextConfig = {
     }
     return [];
   },
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "arogyabandhanfoundation.co.in",
+          },
+        ],
+        destination: "https://www.arogyabandhanfoundation.co.in/:path*",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
